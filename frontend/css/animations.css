@@ -1,12 +1,11 @@
 /* ============================================================
-   animations.css — Premium Animations
-   Fluid, organic transitions.
+   animations.css — Clean Snappy Transitions
    ============================================================ */
 
 @keyframes slideUpFade {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(5px);
   }
   100% {
     opacity: 1;
@@ -17,7 +16,7 @@
 @keyframes slideInRight {
   0% {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateX(10px);
   }
   100% {
     opacity: 1;
@@ -25,24 +24,11 @@
   }
 }
 
-@keyframes fadeScaleUp {
-  0% {
-    opacity: 0;
-    transform: scale(0.95) translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
 /* Base fade class */
 .fade-in {
-  animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideUpFade 0.2s ease-out forwards;
 }
 
-/* Staggered children */
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
+.message {
+  animation: slideUpFade 0.2s ease-out forwards;
+}

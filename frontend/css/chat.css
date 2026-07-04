@@ -1,5 +1,5 @@
 /* ============================================================
-   chat.css — Premium Chat Interface
+   chat.css — Clean Professional Chat Interface
    ============================================================ */
 
    .chat-area {
@@ -11,15 +11,14 @@
     align-items: center;
     position: relative;
     scroll-behavior: smooth;
-    z-index: 2; /* Above mesh bg */
   }
   
   .chat-container {
     width: 100%;
-    max-width: 850px;
+    max-width: 800px;
     display: flex;
     flex-direction: column;
-    gap: var(--space-8);
+    gap: var(--space-6);
     padding-bottom: var(--space-8);
   }
   
@@ -31,71 +30,63 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    max-width: 650px;
-    margin: 10vh auto 0;
-    gap: var(--space-8);
-    animation: fadeScaleUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    max-width: 600px;
+    margin: 8vh auto 0;
+    gap: var(--space-6);
   }
   
   .welcome-logo {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-    color: white;
-    border-radius: var(--radius-lg);
+    width: 64px;
+    height: 64px;
+    background-color: var(--accent);
+    color: #FFF;
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin: 0 auto;
-    box-shadow: 0 10px 30px -10px var(--accent);
   }
   
   .welcome-text h2 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: var(--space-3);
-    letter-spacing: -1px;
-    background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+    color: var(--text-primary);
   }
   
   .welcome-text p {
     color: var(--text-secondary);
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
   
   /* ── Input Area ── */
   .input-area {
-    padding: var(--space-5) var(--space-6);
-    background: linear-gradient(to top, var(--bg-base) 60%, transparent);
+    padding: var(--space-4);
+    background-color: var(--bg-base);
+    border-top: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 10;
   }
   
   .input-wrapper {
     width: 100%;
-    max-width: 850px;
+    max-width: 800px;
     position: relative;
-    background: var(--bg-glass);
-    backdrop-filter: var(--backdrop-blur);
-    -webkit-backdrop-filter: var(--backdrop-blur);
+    background-color: var(--bg-surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     display: flex;
     align-items: flex-end;
-    padding: var(--space-3);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: var(--shadow-lg);
+    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
   
   .input-wrapper:focus-within {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2), var(--shadow-lg);
-    transform: translateY(-2px);
+    border-color: var(--text-tertiary);
+    background-color: var(--bg-base);
+    box-shadow: var(--shadow-sm);
   }
   
   #chat-input {
@@ -103,11 +94,11 @@
     background: transparent;
     border: none;
     color: var(--text-primary);
-    padding: var(--space-3);
+    padding: var(--space-2) 0;
     min-height: 24px;
     max-height: 200px;
     resize: none;
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     line-height: 1.5;
   }
   
@@ -120,49 +111,43 @@
   }
   
   #send-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-md);
-    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    background-color: var(--accent);
+    color: #FFF;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-left: var(--space-3);
     flex-shrink: 0;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    font-size: 1.25rem;
+    font-size: 1.125rem;
   }
   
   #send-btn:hover:not(:disabled) {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    background-color: var(--accent-hover);
   }
   
   #send-btn:disabled {
-    background: var(--bg-input);
+    background-color: var(--bg-input);
     color: var(--text-tertiary);
     cursor: not-allowed;
-    box-shadow: none;
   }
   
   .input-footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
-    max-width: 850px;
-    padding: var(--space-2) var(--space-4) 0;
+    max-width: 800px;
+    padding-top: var(--space-2);
     font-size: 0.75rem;
     color: var(--text-tertiary);
-    font-weight: 500;
-    letter-spacing: 0.5px;
   }
   
   /* ── Messages ── */
   .message {
     display: flex;
-    gap: var(--space-5);
-    animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    gap: var(--space-4);
     width: 100%;
   }
   
@@ -171,34 +156,32 @@
   }
   
   .avatar {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    font-size: 1.125rem;
-    box-shadow: var(--shadow-sm);
+    font-size: 1rem;
   }
   
   .user-avatar {
-    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-    color: white;
+    background-color: var(--bg-input);
+    color: var(--text-secondary);
   }
   
   .ai-avatar {
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border);
-    color: var(--text-primary);
+    background-color: var(--accent);
+    color: #FFF;
   }
   
   .message-content {
     flex: 1;
-    max-width: calc(100% - 56px);
+    max-width: calc(100% - 48px);
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
+    gap: var(--space-2);
   }
   
   .message.user .message-content {
@@ -206,46 +189,30 @@
   }
   
   .user-bubble {
-    background: var(--bg-glass);
-    backdrop-filter: var(--backdrop-blur);
+    background-color: var(--bg-surface);
     color: var(--text-primary);
-    padding: var(--space-4) var(--space-5);
+    padding: var(--space-3) var(--space-4);
     border-radius: var(--radius-lg);
-    border-top-right-radius: var(--radius-sm);
-    font-size: 1.05rem;
-    line-height: 1.6;
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-md);
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
   
   .ai-content {
     color: var(--text-primary);
-    font-size: 1.05rem;
-    line-height: 1.7;
+    font-size: 0.95rem;
+    line-height: 1.6;
     display: flex;
     flex-direction: column;
-    gap: var(--space-5);
+    gap: var(--space-4);
   }
   
   .ai-name {
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.875rem;
     color: var(--text-primary);
     display: flex;
     align-items: center;
-    gap: var(--space-3);
-  }
-  
-  .model-badge {
-    font-size: 0.7rem;
-    padding: 2px 8px;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
-    color: var(--accent-hover);
-    border: 1px solid rgba(99, 102, 241, 0.3);
-    border-radius: var(--radius-full);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
+    gap: var(--space-2);
   }
   
   /* Markdown Styles inside AI messages */
@@ -261,21 +228,17 @@
   /* ── Typing Indicator ── */
   .typing-indicator {
     display: flex;
-    gap: var(--space-5);
+    gap: var(--space-4);
     margin-bottom: var(--space-4);
   }
   
   .typing-bubble {
-    background: var(--bg-glass);
-    border: 1px solid var(--border);
-    padding: var(--space-3) var(--space-4);
-    border-radius: var(--radius-lg);
-    border-top-left-radius: var(--radius-sm);
+    padding: var(--space-2) 0;
   }
   
   .typing-dots {
     display: flex;
-    gap: 6px;
+    gap: 4px;
     padding: var(--space-2) 0;
   }
   
@@ -283,7 +246,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: var(--accent);
+    background-color: var(--text-tertiary);
     animation: typing 1.4s infinite ease-in-out;
   }
   
@@ -292,6 +255,6 @@
   .dot:nth-child(3) { animation-delay: 0.4s; }
   
   @keyframes typing {
-    0%, 100% { transform: scale(1); opacity: 0.3; }
-    50% { transform: scale(1.5); opacity: 1; }
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50% { transform: scale(1.2); opacity: 1; }
   }
