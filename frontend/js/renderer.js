@@ -245,7 +245,7 @@ const Renderer = (() => {
       <div class="ai-content">
         <div class="ai-name">
           StyleAgent
-          <span class="model-badge">Gemini</span>
+          <span class="model-badge">AI Model</span>
         </div>
         ${innerContent}
         <div class="message-actions" role="toolbar" aria-label="Message actions">
