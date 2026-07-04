@@ -32,10 +32,24 @@ async function generateContent(systemPrompt, messages, options = {}) {
 
   // Convert our message format to Gemini's format
   // Gemini uses 'user' and 'model' (not 'assistant')
-  const history = messages.slice(0, -1).map((msg) => ({
-    role: msg.role === 'assistant' ? 'model' : 'user',
-    parts: [{ text: msg.content }],
-  }));
+  const history = messages.slice(0, -1).map((msg) => {
+    let cleanText = msg.content;
+    if (msg.role === 'assistant') {
+      try {
+        const jsonMatch = cleanText.match(/```json\n?([\s\S]*?)\n?```/);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[1]);
+          cleanText = parsed.message || "Provided an outfit recommendation.";
+        }
+      } catch (e) {
+        // Fallback if parsing fails
+      }
+    }
+    return {
+      role: msg.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: cleanText || "Hello" }],
+    };
+  });
 
   // The last message is the current user input
   const lastMessage = messages[messages.length - 1];

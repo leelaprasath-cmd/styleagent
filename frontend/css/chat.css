@@ -1,95 +1,271 @@
 /* ============================================================
-   chat.css — Chat-specific markdown rendering styles
+   chat.css — Professional Chat Interface
    ============================================================ */
 
-/* ── Markdown rendered inside AI bubbles ── */
-.ai-bubble h1, .ai-bubble h2, .ai-bubble h3 {
-  margin: var(--space-3) 0 var(--space-2);
-  color: var(--text-primary);
-}
-
-.ai-bubble h1 { font-size: var(--text-xl); }
-.ai-bubble h2 { font-size: var(--text-lg); }
-.ai-bubble h3 { font-size: var(--text-base); }
-
-.ai-bubble p {
-  margin: var(--space-2) 0;
-  color: var(--text-secondary);
-}
-
-.ai-bubble p:first-child { margin-top: 0; }
-.ai-bubble p:last-child { margin-bottom: 0; }
-
-.ai-bubble ul, .ai-bubble ol {
-  padding-left: var(--space-5);
-  margin: var(--space-2) 0;
-}
-
-.ai-bubble li {
-  margin: var(--space-1) 0;
-  color: var(--text-secondary);
-  font-size: var(--text-sm);
-}
-
-.ai-bubble strong { color: var(--text-primary); font-weight: 600; }
-.ai-bubble em { color: var(--primary-light); }
-
-.ai-bubble code {
-  font-family: var(--font-mono);
-  font-size: 0.85em;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  padding: 2px 6px;
-  border-radius: var(--radius-sm);
-  color: var(--accent-light);
-}
-
-.ai-bubble pre {
-  background: var(--bg-base);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: var(--space-4);
-  overflow-x: auto;
-  margin: var(--space-3) 0;
-}
-
-.ai-bubble pre code {
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: var(--text-sm);
-}
-
-.ai-bubble blockquote {
-  border-left: 3px solid var(--primary);
-  padding: var(--space-2) var(--space-4);
-  margin: var(--space-3) 0;
-  color: var(--text-muted);
-  font-style: italic;
-  background: rgba(139, 92, 246, 0.05);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-}
-
-.ai-bubble table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--text-sm);
-  margin: var(--space-3) 0;
-}
-
-.ai-bubble th {
-  background: var(--bg-elevated);
-  color: var(--text-primary);
-  font-weight: 600;
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--border);
-  text-align: left;
-}
-
-.ai-bubble td {
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-}
-
-.ai-bubble tr:nth-child(even) td { background: rgba(255, 255, 255, 0.02); }
+   .chat-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-6) var(--space-4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    scroll-behavior: smooth;
+  }
+  
+  .chat-container {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    padding-bottom: var(--space-8);
+  }
+  
+  /* ── Welcome Screen ── */
+  .welcome-screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    gap: var(--space-6);
+  }
+  
+  .welcome-logo {
+    width: 64px;
+    height: 64px;
+    background-color: var(--text-primary);
+    color: var(--bg-base);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto;
+  }
+  
+  .welcome-text h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+  }
+  
+  .welcome-text p {
+    color: var(--text-secondary);
+  }
+  
+  /* ── Input Area ── */
+  .input-area {
+    padding: var(--space-4);
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+  }
+  
+  .input-wrapper {
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: flex-end;
+    padding: var(--space-2);
+    transition: border-color 0.2s;
+  }
+  
+  .input-wrapper:focus-within {
+    border-color: var(--accent);
+    background-color: var(--bg-surface);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  
+  #chat-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    padding: var(--space-2);
+    min-height: 24px;
+    max-height: 200px;
+    resize: none;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  #chat-input:focus {
+    outline: none;
+  }
+  
+  #chat-input::placeholder {
+    color: var(--text-tertiary);
+  }
+  
+  #send-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    background-color: var(--accent);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: var(--space-2);
+    flex-shrink: 0;
+    transition: background-color 0.2s;
+  }
+  
+  #send-btn:hover:not(:disabled) {
+    background-color: var(--accent-hover);
+  }
+  
+  #send-btn:disabled {
+    background-color: var(--border);
+    color: var(--text-tertiary);
+    cursor: not-allowed;
+  }
+  
+  .input-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-1) var(--space-4) 0;
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+  }
+  
+  /* ── Messages ── */
+  .message {
+    display: flex;
+    gap: var(--space-4);
+    animation: fadeIn 0.3s ease-out forwards;
+    width: 100%;
+  }
+  
+  .message.user {
+    flex-direction: row-reverse;
+  }
+  
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1rem;
+  }
+  
+  .user-avatar {
+    background-color: var(--border);
+    color: var(--text-primary);
+  }
+  
+  .ai-avatar {
+    background-color: var(--text-primary);
+    color: var(--bg-surface);
+  }
+  
+  .message-content {
+    flex: 1;
+    max-width: calc(100% - 48px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  .message.user .message-content {
+    align-items: flex-end;
+  }
+  
+  .user-bubble {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    border: 1px solid var(--border);
+  }
+  
+  .ai-content {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  
+  .ai-name {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  
+  .model-badge {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    background-color: var(--border);
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Markdown Styles inside AI messages */
+  .ai-content p {
+    margin-bottom: var(--space-3);
+  }
+  
+  .ai-content strong {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  
+  /* ── Typing Indicator ── */
+  .typing-indicator {
+    display: flex;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+  
+  .typing-dots {
+    display: flex;
+    gap: 4px;
+    padding: var(--space-3) 0;
+  }
+  
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--text-tertiary);
+    animation: typing 1.4s infinite ease-in-out;
+  }
+  
+  .dot:nth-child(1) { animation-delay: 0s; }
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+  
+  @keyframes typing {
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50% { transform: scale(1.2); opacity: 1; }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }

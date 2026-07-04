@@ -72,6 +72,26 @@ app.use(
   })
 );
 
+// Basic health check route
+app.get('/api/chat/health', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'StyleAgent API is running.' });
+});
+
+// Firebase config route for the frontend
+app.get('/api/firebase-config', (req, res) => {
+  try {
+    if (!process.env.FIREBASE_CONFIG) {
+      return res.status(200).json({});
+    }
+    // Parse the JSON string provided in the env variable
+    const config = JSON.parse(process.env.FIREBASE_CONFIG);
+    res.status(200).json(config);
+  } catch (error) {
+    logger.error('Server', `Failed to parse FIREBASE_CONFIG: ${error.message}`);
+    res.status(500).json({ error: 'Invalid FIREBASE_CONFIG format' });
+  }
+});
+
 // ── Catch-all: Send index.html for any non-API route ───────
 // This enables client-side routing (SPA behavior)
 app.get('*', (req, res) => {
