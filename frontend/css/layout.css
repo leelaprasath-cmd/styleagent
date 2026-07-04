@@ -1,6 +1,6 @@
 /* ============================================================
-   layout.css — Professional Structural Layout
-   Grid structure, sidebar, topbar
+   layout.css — Premium Structural Layout
+   Floating glassmorphic sidebar and topbar
    ============================================================ */
 
    #app-layout {
@@ -8,21 +8,25 @@
     height: 100vh;
     width: 100vw;
     overflow: hidden;
+    position: relative;
+    z-index: 1;
   }
   
-  /* ── Sidebar ── */
+  /* ── Sidebar (Glassmorphic) ── */
   .sidebar {
-    width: 260px;
-    background-color: var(--bg-surface);
+    width: 280px;
+    background: var(--bg-glass);
+    backdrop-filter: var(--backdrop-blur);
+    -webkit-backdrop-filter: var(--backdrop-blur);
     border-right: 1px solid var(--border);
     display: flex;
     flex-direction: column;
-    transition: width 0.2s ease, transform 0.2s ease;
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 100;
   }
   
   .sidebar.collapsed {
-    width: 60px;
+    width: 72px;
   }
   
   .sidebar.collapsed .sidebar-header h1,
@@ -32,59 +36,64 @@
   }
   
   .sidebar.collapsed .new-chat-btn {
-    padding: var(--space-2);
+    padding: var(--space-3);
     justify-content: center;
   }
+  
   .sidebar.collapsed .new-chat-btn span {
     display: none;
   }
   
   .sidebar-header {
-    height: 60px;
+    height: 72px;
     display: flex;
     align-items: center;
     padding: 0 var(--space-4);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--border-light);
   }
   
   .sidebar-header i {
     font-size: 1.5rem;
-    color: var(--text-primary);
+    color: var(--accent);
     margin-right: var(--space-3);
   }
   
   .sidebar-header h1 {
-    font-size: 1rem;
+    font-size: 1.25rem;
     font-weight: 600;
     letter-spacing: -0.5px;
     white-space: nowrap;
+    background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   
   .sidebar-content {
     flex: 1;
     overflow-y: auto;
-    padding: var(--space-4) var(--space-2);
+    padding: var(--space-6) var(--space-4);
   }
   
   .sidebar-footer {
     padding: var(--space-4);
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--border-light);
     display: flex;
     align-items: center;
     gap: var(--space-3);
   }
   
   .user-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: var(--radius-sm);
-    background-color: var(--accent);
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 500;
-    font-size: 0.875rem;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: var(--shadow-sm);
   }
   
   /* ── Main Content Area ── */
@@ -93,17 +102,19 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    background-color: var(--bg-base);
+    background-color: transparent; /* Allows mesh bg to show through */
   }
   
-  /* ── Topbar ── */
+  /* ── Topbar (Glassmorphic) ── */
   .topbar {
-    height: 60px;
+    height: 72px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 var(--space-4);
-    background-color: var(--bg-surface);
+    padding: 0 var(--space-6);
+    background: var(--bg-glass);
+    backdrop-filter: var(--backdrop-blur);
+    -webkit-backdrop-filter: var(--backdrop-blur);
     border-bottom: 1px solid var(--border);
     z-index: 10;
   }
@@ -111,27 +122,28 @@
   .topbar-left, .topbar-right, .topbar-center {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-3);
   }
   
   .icon-btn {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--text-secondary);
-    transition: background 0.15s, color 0.15s;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     border: 1px solid transparent;
+    font-size: 1.25rem;
   }
   
   .icon-btn:hover {
     background-color: var(--bg-hover);
     color: var(--text-primary);
+    transform: translateY(-1px);
   }
   
-  /* Mobile toggle hidden on desktop */
   #mobile-menu-btn {
     display: none;
   }
@@ -144,11 +156,12 @@
       top: 0;
       bottom: 0;
       transform: translateX(-100%);
+      border-right: none;
+      box-shadow: var(--shadow-lg);
     }
   
     .sidebar.mobile-open {
       transform: translateX(0);
-      width: 280px;
     }
   
     #mobile-menu-btn {
@@ -163,11 +176,13 @@
   .sidebar-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     z-index: 99;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.2s;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
   
   .sidebar-overlay.visible {
