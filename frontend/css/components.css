@@ -1,5 +1,5 @@
 /* ============================================================
-   components.css — Professional AND Attractive Components
+   components.css — Professional Dark Theme Components
    ============================================================ */
 
 /* ── Buttons ── */
@@ -25,7 +25,7 @@
 
 .btn-primary:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: var(--shadow-md), var(--shadow-accent);
+  box-shadow: var(--shadow-md), var(--shadow-accent); /* Glowing accent shadow */
 }
 
 .btn-primary:active {
@@ -53,7 +53,7 @@
 
 .btn-outline:hover {
   background-color: var(--bg-hover);
-  box-shadow: var(--shadow-sm);
+  border-color: #333333;
   transform: translateY(-1px);
 }
 
@@ -66,7 +66,7 @@
 }
 
 .suggestion-chip {
-  background-color: var(--bg-surface);
+  background-color: var(--bg-base); /* Pitch black */
   border: 1px solid var(--border);
   padding: var(--space-4);
   border-radius: var(--radius-lg);
@@ -76,13 +76,13 @@
   gap: var(--space-1);
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   cursor: pointer;
-  box-shadow: var(--shadow-xs);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
 }
 
 .suggestion-chip:hover {
   border-color: var(--accent);
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.1), 0 4px 6px -4px rgba(79, 70, 229, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), var(--shadow-accent); /* Glow instead of shadow */
 }
 
 .chip-title {
@@ -98,17 +98,18 @@
 
 /* ── Outfit Card (Premium Widget look) ── */
 .outfit-card {
-  background-color: var(--bg-surface);
+  background-color: var(--bg-base);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
   margin-bottom: var(--space-5);
-  box-shadow: var(--shadow-sm);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
   transition: all 0.4s var(--fluid-ease);
 }
 
 .outfit-card:hover {
-  box-shadow: var(--shadow-lg);
+  border-color: #333333;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 0 20px rgba(0,0,0,0.5);
   transform: translateY(-2px);
 }
 
@@ -118,7 +119,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--bg-surface);
+  background-color: var(--bg-base);
 }
 
 .outfit-title {
@@ -136,12 +137,13 @@
   padding: 4px 10px;
   border-radius: var(--radius-full);
   background-color: var(--accent-light);
-  color: var(--accent);
+  color: var(--accent-hover);
+  border: 1px solid rgba(99, 102, 241, 0.2);
 }
 
 .outfit-section {
   padding: var(--space-5);
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border);
 }
 
 .outfit-section:last-child {
@@ -152,7 +154,7 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-secondary);
+  color: var(--text-tertiary);
   margin-bottom: var(--space-4);
   font-weight: 600;
 }
@@ -180,7 +182,7 @@
 .item-icon {
   width: 40px;
   height: 40px;
-  background-color: var(--bg-base);
+  background-color: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   display: flex;
@@ -188,14 +190,14 @@
   justify-content: center;
   color: var(--text-secondary);
   flex-shrink: 0;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
   transition: transform 0.3s var(--fluid-ease);
 }
 
 .outfit-item:hover .item-icon {
   transform: scale(1.1) rotate(5deg);
-  color: var(--accent);
-  border-color: var(--accent-light);
+  color: var(--text-primary);
+  border-color: #444;
 }
 
 .item-details h4 {
@@ -222,27 +224,27 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  background-color: var(--bg-base);
+  background-color: var(--bg-surface);
   border: 1px solid var(--border);
   padding: 4px var(--space-4) 4px 4px;
   border-radius: var(--radius-full);
   font-size: 0.85rem;
   font-weight: 500;
-  box-shadow: var(--shadow-xs);
-  transition: transform 0.2s var(--fluid-ease);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+  transition: transform 0.2s var(--fluid-ease), border-color 0.2s;
 }
 
 .color-chip:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+  border-color: #444;
 }
 
 .color-swatch {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 1px solid rgba(0,0,0,0.1);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
 }
 
 /* ── Tips ── */
@@ -250,16 +252,16 @@
   display: flex;
   gap: var(--space-3);
   padding: var(--space-4);
-  background-color: var(--accent-light);
-  border: 1px solid rgba(79, 70, 229, 0.1);
+  background-color: var(--bg-base);
+  border: 1px solid var(--border);
   border-radius: var(--radius-md);
   font-size: 0.95rem;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
 .style-tip i {
-  color: var(--accent);
+  color: var(--accent-hover);
   margin-top: 2px;
   font-size: 1.25rem;
 }
@@ -278,7 +280,7 @@
 .toast {
   background-color: var(--bg-surface);
   color: var(--text-primary);
-  border: 1px solid var(--border);
+  border: 1px solid #333;
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-md);
   font-size: 0.95rem;
@@ -286,7 +288,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
   animation: slideInRight 0.4s var(--fluid-ease);
 }
 
@@ -302,7 +304,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(17, 24, 39, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   display: flex;
@@ -320,12 +322,12 @@
 }
 
 .modal-content {
-  background-color: var(--bg-surface);
+  background-color: var(--bg-base);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   width: 90%;
   max-width: 440px;
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   transform: translateY(20px) scale(0.95);
   transition: all 0.4s var(--fluid-ease);
 }
@@ -361,13 +363,13 @@
 .setting-label {
   font-size: 0.95rem;
   font-weight: 500;
-  color: var(--text-secondary);
+  color: var(--text-tertiary);
 }
 
 .tag {
   display: inline-block;
   padding: 4px 10px;
-  background-color: var(--bg-input);
+  background-color: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-full);
   font-size: 0.75rem;
