@@ -1,0 +1,95 @@
+/* ============================================================
+   chat.css — Chat-specific markdown rendering styles
+   ============================================================ */
+
+/* ── Markdown rendered inside AI bubbles ── */
+.ai-bubble h1, .ai-bubble h2, .ai-bubble h3 {
+  margin: var(--space-3) 0 var(--space-2);
+  color: var(--text-primary);
+}
+
+.ai-bubble h1 { font-size: var(--text-xl); }
+.ai-bubble h2 { font-size: var(--text-lg); }
+.ai-bubble h3 { font-size: var(--text-base); }
+
+.ai-bubble p {
+  margin: var(--space-2) 0;
+  color: var(--text-secondary);
+}
+
+.ai-bubble p:first-child { margin-top: 0; }
+.ai-bubble p:last-child { margin-bottom: 0; }
+
+.ai-bubble ul, .ai-bubble ol {
+  padding-left: var(--space-5);
+  margin: var(--space-2) 0;
+}
+
+.ai-bubble li {
+  margin: var(--space-1) 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.ai-bubble strong { color: var(--text-primary); font-weight: 600; }
+.ai-bubble em { color: var(--primary-light); }
+
+.ai-bubble code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  color: var(--accent-light);
+}
+
+.ai-bubble pre {
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  overflow-x: auto;
+  margin: var(--space-3) 0;
+}
+
+.ai-bubble pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--text-sm);
+}
+
+.ai-bubble blockquote {
+  border-left: 3px solid var(--primary);
+  padding: var(--space-2) var(--space-4);
+  margin: var(--space-3) 0;
+  color: var(--text-muted);
+  font-style: italic;
+  background: rgba(139, 92, 246, 0.05);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.ai-bubble table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  margin: var(--space-3) 0;
+}
+
+.ai-bubble th {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-weight: 600;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.ai-bubble td {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.ai-bubble tr:nth-child(even) td { background: rgba(255, 255, 255, 0.02); }

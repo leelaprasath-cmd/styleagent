@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="StyleAgent — Your AI Personal Fashion Stylist. Get personalized outfit recommendations, color coordination, and style advice powered by Gemini AI." />
+    <meta name="keywords" content="AI fashion stylist, outfit recommendations, style advice, wardrobe planning, color coordination" />
+    <meta name="theme-color" content="#0B0B0F" />
+    <title>StyleAgent — AI Personal Fashion Stylist</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Boxicons for UI icons -->
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+    <!-- Marked.js for Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
+
+    <!-- Stylesheets (order matters) -->
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/chat.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+  </head>
+
+  <body>
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- APP SHELL                                       -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div id="app" class="app-shell">
+
+      <!-- ── Sidebar ── -->
+      <aside id="sidebar" class="sidebar" aria-label="Navigation sidebar">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header">
+          <div class="logo">
+            <div class="logo-icon">
+              <i class="bx bx-diamond" aria-hidden="true"></i>
+            </div>
+            <span class="logo-text">StyleAgent</span>
+          </div>
+          <button id="sidebar-toggle" class="icon-btn" aria-label="Close sidebar" title="Toggle sidebar">
+            <i class="bx bx-sidebar" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <!-- New Chat Button -->
+        <button id="new-chat-btn" class="new-chat-btn" aria-label="Start new conversation">
+          <i class="bx bx-plus" aria-hidden="true"></i>
+          <span>New Conversation</span>
+        </button>
+
+        <!-- Conversation History (future use) -->
+        <div class="sidebar-section">
+          <span class="sidebar-label">Today</span>
+          <nav class="history-list" id="history-list" role="navigation" aria-label="Conversation history">
+            <div class="history-empty">
+              <i class="bx bx-chat" aria-hidden="true"></i>
+              <p>No conversations yet</p>
+            </div>
+          </nav>
+        </div>
+
+        <!-- Sidebar Footer -->
+        <div class="sidebar-footer">
+          <div class="sidebar-divider"></div>
+          <!-- Theme Toggle -->
+          <button id="theme-toggle" class="theme-btn" aria-label="Toggle light/dark mode">
+            <i class="bx bx-moon" id="theme-icon" aria-hidden="true"></i>
+            <span id="theme-label">Dark Mode</span>
+          </button>
+
+          <!-- Version Info -->
+          <div class="version-info">
+            <span>StyleAgent v1.0</span>
+            <span class="badge">MVP</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ── Main Content ── -->
+      <main id="main" class="main-content" role="main">
+
+        <!-- Top Navigation Bar -->
+        <nav class="topbar" aria-label="Top navigation">
+          <div class="topbar-left">
+            <button id="mobile-menu-btn" class="icon-btn" aria-label="Open menu">
+              <i class="bx bx-menu" aria-hidden="true"></i>
+            </button>
+            <div class="topbar-brand">
+              <i class="bx bx-diamond" aria-hidden="true"></i>
+              <span>StyleAgent</span>
+            </div>
+          </div>
+          <div class="topbar-center">
+            <div class="status-pill">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span>Gemini Powered</span>
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button id="clear-chat-btn" class="icon-btn" aria-label="Clear chat" title="Clear chat">
+              <i class="bx bx-trash" aria-hidden="true"></i>
+            </button>
+            <button id="settings-btn" class="icon-btn" aria-label="Settings" title="Settings">
+              <i class="bx bx-cog" aria-hidden="true"></i>
+            </button>
+          </div>
+        </nav>
+
+        <!-- ── Chat Area ── -->
+        <div id="chat-area" class="chat-area">
+
+          <!-- Welcome / Hero State — shown when chat is empty -->
+          <div id="welcome-screen" class="welcome-screen" role="region" aria-label="Welcome">
+            <div class="welcome-glow" aria-hidden="true"></div>
+
+            <div class="welcome-content">
+              <div class="welcome-logo" aria-hidden="true">
+                <div class="logo-ring">
+                  <i class="bx bx-diamond"></i>
+                </div>
+              </div>
+
+              <h1 class="welcome-title">
+                Meet <span class="gradient-text">StyleAgent</span>
+              </h1>
+              <p class="welcome-subtitle">
+                Your AI-powered personal fashion stylist.<br />
+                Get outfit recommendations, color advice & style tips.
+              </p>
+
+              <!-- Feature Pills -->
+              <div class="feature-pills" aria-label="Features">
+                <div class="feature-pill">
+                  <i class="bx bx-sun" aria-hidden="true"></i>
+                  <span>Weather-Aware</span>
+                </div>
+                <div class="feature-pill">
+                  <i class="bx bx-palette" aria-hidden="true"></i>
+                  <span>Color Matching</span>
+                </div>
+                <div class="feature-pill">
+                  <i class="bx bx-dollar-circle" aria-hidden="true"></i>
+                  <span>Budget-Friendly</span>
+                </div>
+                <div class="feature-pill">
+                  <i class="bx bx-calendar-event" aria-hidden="true"></i>
+                  <span>Occasion-Specific</span>
+                </div>
+              </div>
+
+              <!-- Suggestion Chips -->
+              <div class="suggestions-grid" role="group" aria-label="Suggestion prompts">
+                <button class="suggestion-chip" data-prompt="What should I wear to a job interview this week? I want to look professional but modern." aria-label="Job interview outfit suggestion">
+                  <i class="bx bx-briefcase" aria-hidden="true"></i>
+                  <div>
+                    <strong>Job Interview</strong>
+                    <span>Professional & modern look</span>
+                  </div>
+                </button>
+                <button class="suggestion-chip" data-prompt="I have a date at a nice restaurant tonight. Budget is $100. What should I wear?" aria-label="Date night outfit suggestion">
+                  <i class="bx bx-heart" aria-hidden="true"></i>
+                  <div>
+                    <strong>Date Night</strong>
+                    <span>Stylish & confident</span>
+                  </div>
+                </button>
+                <button class="suggestion-chip" data-prompt="It's summer and hot outside. I need a casual weekend outfit that is trendy and comfortable." aria-label="Summer casual outfit suggestion">
+                  <i class="bx bx-sun" aria-hidden="true"></i>
+                  <div>
+                    <strong>Summer Casual</strong>
+                    <span>Trendy & comfortable</span>
+                  </div>
+                </button>
+                <button class="suggestion-chip" data-prompt="What colors go well together for a smart casual office look? Give me a full color palette." aria-label="Color advice suggestion">
+                  <i class="bx bx-palette" aria-hidden="true"></i>
+                  <div>
+                    <strong>Color Advice</strong>
+                    <span>Office-ready palette</span>
+                  </div>
+                </button>
+                <button class="suggestion-chip" data-prompt="I'm going to a beach wedding this weekend. What is appropriate to wear as a guest?" aria-label="Wedding guest outfit suggestion">
+                  <i class="bx bx-ring" aria-hidden="true"></i>
+                  <div>
+                    <strong>Wedding Guest</strong>
+                    <span>Elegant beach attire</span>
+                  </div>
+                </button>
+                <button class="suggestion-chip" data-prompt="Help me build a minimalist capsule wardrobe with only 10 essential pieces under $500 total." aria-label="Capsule wardrobe suggestion">
+                  <i class="bx bx-closet" aria-hidden="true"></i>
+                  <div>
+                    <strong>Capsule Wardrobe</strong>
+                    <span>10 essentials under $500</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Messages Container -->
+          <div id="messages-container" class="messages-container" role="log" aria-live="polite" aria-label="Chat messages">
+            <!-- Messages are injected here by JavaScript -->
+          </div>
+
+          <!-- Typing Indicator -->
+          <div id="typing-indicator" class="typing-indicator hidden" aria-label="StyleAgent is thinking" role="status">
+            <div class="typing-avatar">
+              <i class="bx bx-diamond" aria-hidden="true"></i>
+            </div>
+            <div class="typing-bubble">
+              <span class="typing-text">StyleAgent is thinking</span>
+              <div class="typing-dots" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Input Area ── -->
+        <div class="input-wrapper">
+          <div class="input-container">
+            <form id="chat-form" class="chat-form" role="form" aria-label="Send a message">
+              <div class="input-row">
+                <div class="textarea-wrapper">
+                  <textarea
+                    id="chat-input"
+                    class="chat-input"
+                    placeholder="Ask me anything about fashion, outfits, style..."
+                    rows="1"
+                    maxlength="4000"
+                    aria-label="Type your fashion question"
+                    aria-multiline="true"
+                  ></textarea>
+                </div>
+                <button
+                  type="submit"
+                  id="send-btn"
+                  class="send-btn"
+                  aria-label="Send message"
+                  disabled
+                >
+                  <i class="bx bx-send" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="input-footer">
+                <span class="input-hint">
+                  <i class="bx bx-info-circle" aria-hidden="true"></i>
+                  StyleAgent only answers fashion questions
+                </span>
+                <span id="char-count" class="char-count">0 / 4000</span>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- SETTINGS MODAL                                  -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div id="settings-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <div class="modal-backdrop" id="modal-backdrop"></div>
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 id="settings-title"><i class="bx bx-cog" aria-hidden="true"></i> Settings</h2>
+          <button class="icon-btn" id="close-settings" aria-label="Close settings">
+            <i class="bx bx-x" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Theme Setting -->
+          <div class="setting-group">
+            <label class="setting-label">Appearance</label>
+            <div class="setting-options">
+              <button class="option-btn active" id="dark-mode-btn" aria-pressed="true">
+                <i class="bx bx-moon" aria-hidden="true"></i> Dark
+              </button>
+              <button class="option-btn" id="light-mode-btn" aria-pressed="false">
+                <i class="bx bx-sun" aria-hidden="true"></i> Light
+              </button>
+            </div>
+          </div>
+          <!-- About -->
+          <div class="setting-group">
+            <label class="setting-label">About StyleAgent</label>
+            <div class="about-card">
+              <p>StyleAgent is an AI Personal Fashion Stylist powered by Google Gemini. It uses a multi-agent architecture to analyze your occasions, weather, budget, and style preferences.</p>
+              <div class="about-tags">
+                <span class="tag">Gemini AI</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">Multi-Agent</span>
+                <span class="tag">v1.0 MVP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- TOAST NOTIFICATION CONTAINER                   -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div id="toast-container" class="toast-container" aria-live="assertive" role="alert"></div>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- JAVASCRIPT MODULES                             -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <script src="js/utils.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
