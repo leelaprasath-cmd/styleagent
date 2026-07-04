@@ -46,7 +46,8 @@
     justify-content: center;
     font-size: 2.25rem;
     margin: 0 auto;
-    box-shadow: var(--shadow-accent);
+    /* Added continuous float breathing animation */
+    animation: floatBreathing 4s ease-in-out infinite;
   }
   
   .welcome-text h2 {
@@ -82,14 +83,14 @@
     display: flex;
     align-items: flex-end;
     padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     box-shadow: var(--shadow-sm);
   }
   
   .input-wrapper:focus-within {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-light), var(--shadow-md);
-    transform: translateY(-1px);
+    box-shadow: 0 0 0 4px var(--accent-light), var(--shadow-md);
+    transform: translateY(-2px);
   }
   
   #chat-input {
@@ -126,11 +127,11 @@
     flex-shrink: 0;
     font-size: 1.25rem;
     box-shadow: var(--shadow-sm);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   }
   
   #send-btn:hover:not(:disabled) {
-    transform: translateY(-1px);
+    transform: translateY(-2px) scale(1.05);
     box-shadow: var(--shadow-md), var(--shadow-accent);
   }
   
@@ -156,7 +157,7 @@
     display: flex;
     gap: var(--space-4);
     width: 100%;
-    animation: slideUpFade 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    /* Uses the new fluid glide animation from animations.css */
   }
   
   .message.user {
@@ -256,6 +257,7 @@
     display: flex;
     gap: var(--space-4);
     margin-bottom: var(--space-4);
+    animation: messageGlide 0.4s var(--fluid-ease) forwards;
   }
   
   .typing-bubble {
@@ -269,23 +271,19 @@
   
   .typing-dots {
     display: flex;
-    gap: 5px;
+    gap: 6px;
     padding: var(--space-1) 0;
+    align-items: center;
   }
   
   .dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: var(--text-tertiary);
-    animation: typing 1.4s infinite ease-in-out;
+    background-color: var(--accent);
+    animation: typingWave 1.2s infinite ease-in-out;
   }
   
   .dot:nth-child(1) { animation-delay: 0s; }
-  .dot:nth-child(2) { animation-delay: 0.2s; }
-  .dot:nth-child(3) { animation-delay: 0.4s; }
-  
-  @keyframes typing {
-    0%, 100% { transform: scale(1); opacity: 0.4; }
-    50% { transform: scale(1.2); opacity: 1; }
-  }
+  .dot:nth-child(2) { animation-delay: 0.15s; }
+  .dot:nth-child(3) { animation-delay: 0.3s; }
