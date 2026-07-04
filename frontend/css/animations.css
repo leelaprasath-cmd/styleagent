@@ -1,11 +1,12 @@
 /* ============================================================
-   animations.css — Clean Snappy Transitions
+   animations.css — Professional AND Attractive Animations
+   Buttery smooth, snappy, and refined.
    ============================================================ */
 
 @keyframes slideUpFade {
   0% {
     opacity: 0;
-    transform: translateY(5px);
+    transform: translateY(10px);
   }
   100% {
     opacity: 1;
@@ -16,7 +17,7 @@
 @keyframes slideInRight {
   0% {
     opacity: 0;
-    transform: translateX(10px);
+    transform: translateX(15px);
   }
   100% {
     opacity: 1;
@@ -26,9 +27,10 @@
 
 /* Base fade class */
 .fade-in {
-  animation: slideUpFade 0.2s ease-out forwards;
+  animation: slideUpFade 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-.message {
-  animation: slideUpFade 0.2s ease-out forwards;
-}
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }

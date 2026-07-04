@@ -1,45 +1,51 @@
 /* ============================================================
-   main.css — Clean Professional UI Polish
-   Minimalist light mode, Inter font, solid borders.
+   main.css — Professional AND Attractive (Stripe/Vercel aesthetic)
+   Beautiful light mode, elegant shadows, vibrant indigo accent.
    ============================================================ */
 
    :root {
     /* ── Typography ── */
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   
-    /* ── Clean Light Palette ── */
-    --bg-base: #FFFFFF;
-    --bg-surface: #F9F9F9;
-    --bg-input: #F4F4F4;
-    --bg-hover: #ECECEC;
+    /* ── Clean & Beautiful Light Palette ── */
+    --bg-base: #F9FAFB;       /* Soft off-white for depth */
+    --bg-surface: #FFFFFF;    /* Pure white for elevated cards */
+    --bg-input: #F3F4F6;
+    --bg-hover: #F3F4F6;
     
-    --text-primary: #0D0D0D;
-    --text-secondary: #595959;
-    --text-tertiary: #8C8C8C;
+    --text-primary: #111827;  /* High contrast, near black */
+    --text-secondary: #4B5563;
+    --text-tertiary: #9CA3AF;
   
-    /* Accent: Professional Black / Dark Grey */
-    --accent: #1A1A1A;
-    --accent-hover: #333333;
-    --accent-light: #F0F0F0;
+    /* Accent: Vibrant Premium Indigo */
+    --accent: #4F46E5;
+    --accent-hover: #4338CA;
+    --accent-light: #EEF2FF;  /* Very soft blue for active states */
     
-    /* Semantic Colors (Slightly muted for professionalism) */
-    --success: #1677FF; /* Blue instead of green for a tech feel */
-    --warning: #FAAD14;
-    --error: #FF4D4F;
-    --info: #1677FF;
+    /* Semantic Colors */
+    --success: #059669; 
+    --warning: #D97706;
+    --error: #DC2626;
+    --info: #2563EB;
   
-    /* ── Borders & Shadows ── */
-    --border: #E5E5E5;
-    --border-light: #F0F0F0;
+    /* ── Borders & Shadows (The "Attractive" part) ── */
+    --border: #E5E7EB;
+    --border-light: #F3F4F6;
     
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
-    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.08);
+    /* Layered, incredibly soft shadows */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    
+    /* Accent glow for buttons */
+    --shadow-accent: 0 4px 14px 0 rgba(79, 70, 229, 0.39);
   
     /* ── Radii ── */
     --radius-sm: 6px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
     --radius-full: 9999px;
   
     /* ── Spacing ── */
@@ -65,20 +71,21 @@
     font-family: var(--font-sans);
     background-color: var(--bg-base);
     color: var(--text-primary);
-    line-height: 1.5;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow: hidden;
   }
   
   a {
-    color: var(--info);
+    color: var(--accent);
     text-decoration: none;
-    transition: text-decoration 0.2s;
+    transition: color 0.2s;
+    font-weight: 500;
   }
   
   a:hover {
-    text-decoration: underline;
+    color: var(--accent-hover);
   }
   
   button, input, textarea {
@@ -94,16 +101,16 @@
   
   /* Custom Scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #D9D9D9;
+    background: #CBD5E1;
     border-radius: var(--radius-full);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #BFBFBF;
+    background: #94A3B8;
   }
