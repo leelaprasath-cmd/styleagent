@@ -114,3 +114,6 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #94A3B8;
   }
+
+/* Utilities */
+.hidden { display: none !important; }
