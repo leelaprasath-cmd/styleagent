@@ -12,7 +12,7 @@
   /* ── Sidebar ── */
   .sidebar {
     width: 280px;
-    background-color: var(--bg-base); /* Pitch black sidebar */
+    background-color: var(--bg-surface);
     border-right: 1px solid var(--border);
     display: flex;
     flex-direction: column;
@@ -81,7 +81,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    background-color: var(--bg-surface); /* Dark slate main content */
+    background-color: var(--bg-base); /* Slightly darker than surface for contrast */
   }
   
   /* ── Topbar ── */
@@ -93,6 +93,7 @@
     padding: 0 var(--space-6);
     background-color: var(--bg-surface);
     border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm); /* Subtle elevation */
     z-index: 10;
   }
   
@@ -131,7 +132,6 @@
       top: 0;
       bottom: 0;
       transform: translateX(-100%);
-      background-color: var(--bg-surface); /* ensure it overlays well on mobile */
     }
   
     .sidebar.mobile-open {
@@ -151,9 +151,9 @@
   .sidebar-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: rgba(17, 24, 39, 0.4);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     z-index: 99;
     opacity: 0;
     visibility: hidden;
