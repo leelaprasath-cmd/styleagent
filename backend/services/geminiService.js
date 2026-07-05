@@ -149,7 +149,8 @@ async function generateContent(systemPrompt, messages, options = {}) {
  */
 async function quickGenerate(prompt) {
   if (!genAI) {
-    return '{"error": "Demo mode active"}';
+    // When in Demo Mode, bypass the intentAgent by faking a positive classification
+    return '{"isFashion": true, "confidence": 100, "reason": "Demo mode bypass"}';
   }
 
   const model = genAI.getGenerativeModel({
