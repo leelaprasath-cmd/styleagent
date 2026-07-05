@@ -23,19 +23,11 @@ async function detectIntent(messages) {
   logger.agent('IntentAgent', `Analyzing: "${lastUserMessage.substring(0, 80)}..."`);
 
   try {
-    const prompt = INTENT_TEMPLATE(lastUserMessage);
-    const response = await quickGenerate(prompt);
-
-    // Parse the JSON response from Gemini
-    const cleanResponse = response.replace(/```json\n?|\n?```/g, '').trim();
-    const result = JSON.parse(cleanResponse);
-
-    logger.agent('IntentAgent', `Result: isFashion=${result.isFashion}, confidence=${result.confidence}%`);
-
+    // TEMPORARILY DISABLED: Allow all conversational testing
     return {
-      isFashion: result.isFashion === true,
-      confidence: result.confidence || 50,
-      reason: result.reason || '',
+      isFashion: true,
+      confidence: 100,
+      reason: 'Gatekeeper disabled for general conversation'
     };
   } catch (error) {
     // If intent detection fails, assume it's fashion-related (fail open)
