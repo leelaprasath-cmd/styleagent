@@ -115,14 +115,13 @@ async function generateContent(systemPrompt, messages, options = {}) {
   } catch (error) {
     // Handle specific Gemini API errors
     if (error.status === 429) {
-      logger.warn('GeminiService', 'Rate limit hit — retrying in 2s...');
-      await new Promise((r) => setTimeout(r, 2000));
-      return generateContent(systemPrompt, messages, options);
+      logger.error('GeminiService', 'Quota exceeded or Rate Limit hit', error.message);
+      throw new Error('Your Gemini API Key has exceeded its quota or requires billing to be enabled. Please check your Google AI Studio dashboard.');
     }
 
     if (error.status === 400) {
       logger.error('GeminiService', 'Bad request to Gemini API', error.message);
-      throw new Error('Invalid request to AI service. Please rephrase your question.');
+      throw new Error('Invalid request to AI service. Please check your API key or prompt.');
     }
 
     logger.error('GeminiService', 'Gemini API error', error.message);
