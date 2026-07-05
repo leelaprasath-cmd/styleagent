@@ -17,44 +17,57 @@ function getMockResponse(lastUserMessage) {
   const isInterview = lastUserMessage.toLowerCase().includes('interview');
   const isWedding = lastUserMessage.toLowerCase().includes('wedding');
 
-  let message = "I am currently in Demo Mode because the `GEMINI_API_KEY` is not set on Vercel. However, I'd still love to recommend an outfit based on your prompt!";
-  let title = "Casual Everyday Look";
-  let items = [
-    { name: "Classic White Tee", description: "A comfortable, well-fitted cotton t-shirt.", icon: "bx-purchase-tag" },
-    { name: "Dark Wash Denim", description: "Versatile jeans that can be dressed up or down.", icon: "bx-trip" },
-    { name: "White Sneakers", description: "Clean, minimalist sneakers for a sharp finish.", icon: "bx-run" }
+  let greeting = "I'm currently in Demo Mode because the `GEMINI_API_KEY` is not set on Vercel. However, I'd still love to recommend an outfit based on your prompt!";
+  let whyItWorks = "This combination balances casual comfort with clean, modern aesthetics, making it perfect for everyday wear.";
+  
+  let outfit = {
+    top: "Classic White Cotton Tee",
+    bottom: "Dark Wash Straight-Leg Denim",
+    shoes: "Minimalist White Leather Sneakers",
+    outerwear: "Lightweight Navy Bomber Jacket"
+  };
+  let colorPalette = [
+    { name: "Crisp White", hex: "#FFFFFF", role: "Base" },
+    { name: "Navy Blue", hex: "#1E3A8A", role: "Accent" },
+    { name: "Slate Grey", hex: "#E5E7EB", role: "Neutral" }
   ];
-  let colors = ["#FFFFFF", "#1E3A8A", "#E5E7EB"];
+  let stylingTips = [
+    "Tuck the tee slightly at the front (French tuck) for a more tailored silhouette.",
+    "Cuff the jeans once or twice to show off the clean sneakers.",
+    "Since the API key is missing, this is a simulated response. Add your GEMINI_API_KEY to Vercel to unlock the real AI!"
+  ];
 
   if (isInterview) {
-    title = "Tech Interview Smart Casual";
-    message = "In Demo Mode! But for a tech interview, you want to look polished but not overly formal. Here's a great combination:";
-    items = [
-      { name: "Navy Blazer", description: "Unstructured blazer for a professional yet relaxed vibe.", icon: "bx-briefcase" },
-      { name: "Crisp Oxford Shirt", description: "Light blue or white button-down shirt.", icon: "bx-user" },
-      { name: "Chinos", description: "Olive or khaki chinos to complement the navy blazer.", icon: "bx-street-view" }
-    ];
-    colors = ["#1E3A8A", "#F3F4F6", "#4B5320"];
+    greeting = "In Demo Mode! But for a tech interview, you want to look polished but not overly formal. Here's a great combination:";
+    outfit = {
+      top: "Crisp Light Blue Oxford Shirt",
+      bottom: "Olive Chinos",
+      shoes: "Brown Leather Loafers",
+      outerwear: "Unstructured Navy Blazer"
+    };
+    whyItWorks = "The unstructured blazer elevates the look to professional, while the chinos and open collar keep it approachable for tech culture.";
+    stylingTips[0] = "Make sure the blazer fits well in the shoulders—it's the most important part of the fit.";
   } else if (isWedding) {
-    title = "Summer Beach Wedding";
-    message = "In Demo Mode! For a beach wedding, breathable fabrics and lighter colors are key to staying cool and looking sharp.";
-    items = [
-      { name: "Linen Suit", description: "Light tan or beige linen suit.", icon: "bx-sun" },
-      { name: "White Linen Shirt", description: "No tie needed, keep the top button open.", icon: "bx-water" },
-      { name: "Loafers", description: "Suede loafers in a medium brown.", icon: "bx-walk" }
-    ];
-    colors = ["#D2B48C", "#FFFFFF", "#8B4513"];
+    greeting = "In Demo Mode! For a beach wedding, breathable fabrics and lighter colors are key to staying cool and looking sharp.";
+    outfit = {
+      top: "White Linen Button-Down (No Tie)",
+      bottom: "Light Tan Linen Trousers",
+      shoes: "Suede Loafers (Sockless)",
+      outerwear: "Beige Linen Suit Jacket"
+    };
+    whyItWorks = "Linen is highly breathable and perfectly matches the relaxed yet elegant vibe of a beach setting.";
+    stylingTips[0] = "Embrace the wrinkles—linen naturally creases and adds character to the outfit.";
   }
 
   const jsonResponse = {
-    message,
-    outfit: {
-      title,
-      confidence: 95,
-      items,
-      colors,
-      tips: ["Since the API key is missing, this is a simulated response. Add your GEMINI_API_KEY to Vercel to unlock the real AI!"]
-    }
+    greeting,
+    outfit,
+    whyItWorks,
+    stylingTips,
+    colorPalette,
+    confidenceScore: 95,
+    fashionRating: 4.5,
+    stylingNote: "Add your GEMINI_API_KEY to Vercel to unlock real, personalized AI styling!"
   };
 
   return "```json\n" + JSON.stringify(jsonResponse, null, 2) + "\n```";
