@@ -1,46 +1,46 @@
 /* ============================================================
-   main.css — Professional AND Attractive (Stripe/Vercel aesthetic)
-   Beautiful light mode, elegant shadows, vibrant indigo accent.
+   main.css — Professional Dark Theme (Vercel/Linear style)
+   Pitch black backgrounds, subtle borders, muted text.
    ============================================================ */
 
-   :root {
+   :root[data-theme="dark"] {
     /* ── Typography ── */
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   
-    /* ── Clean & Beautiful Light Palette ── */
-    --bg-base: #F9FAFB;       /* Soft off-white for depth */
-    --bg-surface: #FFFFFF;    /* Pure white for elevated cards */
-    --bg-input: #F3F4F6;
-    --bg-hover: #F3F4F6;
+    /* ── Deep Matte Dark Palette ── */
+    --bg-base: #000000;       /* Pitch black background */
+    --bg-surface: #0A0A0A;    /* Extremely dark slate for cards */
+    --bg-input: #111111;      /* Slightly lighter for inputs */
+    --bg-hover: #1A1A1A;      
     
-    --text-primary: #111827;  /* High contrast, near black */
-    --text-secondary: #4B5563;
-    --text-tertiary: #9CA3AF;
+    --text-primary: #EDEDED;  /* Off-white, highly readable */
+    --text-secondary: #A1A1AA; /* Muted slate grey */
+    --text-tertiary: #52525B;
   
-    /* Accent: Vibrant Premium Indigo */
-    --accent: #4F46E5;
-    --accent-hover: #4338CA;
-    --accent-light: #EEF2FF;  /* Very soft blue for active states */
+    /* Accent: Professional Indigo (used very sparingly) */
+    --accent: #6366F1;
+    --accent-hover: #818CF8;
+    --accent-light: rgba(99, 102, 241, 0.15); /* Translucent glow */
     
-    /* Semantic Colors */
-    --success: #059669; 
-    --warning: #D97706;
-    --error: #DC2626;
-    --info: #2563EB;
+    /* Semantic Colors (Muted for dark mode) */
+    --success: #10B981; 
+    --warning: #F59E0B;
+    --error: #EF4444;
+    --info: #3B82F6;
   
-    /* ── Borders & Shadows (The "Attractive" part) ── */
-    --border: #E5E7EB;
-    --border-light: #F3F4F6;
+    /* ── Borders & Glows ── */
+    --border: #222222;        /* Very subtle border */
+    --border-light: #1A1A1A;
     
-    /* Layered, incredibly soft shadows */
-    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    /* In dark mode, drop shadows are replaced by faint outer glows and inner borders */
+    --shadow-xs: 0 0 0 1px rgba(255, 255, 255, 0.05);
+    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    --shadow-md: 0 8px 12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    --shadow-xl: 0 24px 32px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     
-    /* Accent glow for buttons */
-    --shadow-accent: 0 4px 14px 0 rgba(79, 70, 229, 0.39);
+    /* Accent glow for primary buttons */
+    --shadow-accent: 0 0 15px rgba(99, 102, 241, 0.4);
   
     /* ── Radii ── */
     --radius-sm: 6px;
@@ -108,12 +108,12 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #CBD5E1;
+    background: #333333;
     border-radius: var(--radius-full);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #94A3B8;
+    background: #555555;
   }
 
-/* Utilities */
-.hidden { display: none !important; }
+  /* Utilities */
+  .hidden { display: none !important; }
