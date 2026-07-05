@@ -243,10 +243,6 @@ const Renderer = (() => {
     <div class="message-ai" role="listitem">
       <div class="ai-avatar" aria-hidden="true"><i class="bx bx-diamond"></i></div>
       <div class="ai-content">
-        <div class="ai-name">
-          StyleAgent
-          <span class="model-badge">AI Model</span>
-        </div>
         ${innerContent}
         <div class="message-actions" role="toolbar" aria-label="Message actions">
           <button class="action-btn copy-btn" data-text="${escapeHtml(copyText)}" aria-label="Copy response">

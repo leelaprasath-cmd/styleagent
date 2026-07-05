@@ -17,60 +17,37 @@ function getMockResponse(lastUserMessage) {
   const isInterview = lastUserMessage.toLowerCase().includes('interview');
   const isWedding = lastUserMessage.toLowerCase().includes('wedding');
 
-  let greeting = "I'm currently in Demo Mode because the `GEMINI_API_KEY` is not set on Vercel. However, I'd still love to recommend an outfit based on your prompt!";
-  let whyItWorks = "This combination balances casual comfort with clean, modern aesthetics, making it perfect for everyday wear.";
-  
-  let outfit = {
-    top: "Classic White Cotton Tee",
-    bottom: "Dark Wash Straight-Leg Denim",
-    shoes: "Minimalist White Leather Sneakers",
-    outerwear: "Lightweight Navy Bomber Jacket"
-  };
-  let colorPalette = [
-    { name: "Crisp White", hex: "#FFFFFF", role: "Base" },
-    { name: "Navy Blue", hex: "#1E3A8A", role: "Accent" },
-    { name: "Slate Grey", hex: "#E5E7EB", role: "Neutral" }
-  ];
-  let stylingTips = [
-    "Tuck the tee slightly at the front (French tuck) for a more tailored silhouette.",
-    "Cuff the jeans once or twice to show off the clean sneakers.",
-    "Since the API key is missing, this is a simulated response. Add your GEMINI_API_KEY to Vercel to unlock the real AI!"
-  ];
-
   if (isInterview) {
-    greeting = "In Demo Mode! But for a tech interview, you want to look polished but not overly formal. Here's a great combination:";
-    outfit = {
-      top: "Crisp Light Blue Oxford Shirt",
-      bottom: "Olive Chinos",
-      shoes: "Brown Leather Loafers",
-      outerwear: "Unstructured Navy Blazer"
-    };
-    whyItWorks = "The unstructured blazer elevates the look to professional, while the chinos and open collar keep it approachable for tech culture.";
-    stylingTips[0] = "Make sure the blazer fits well in the shoulders—it's the most important part of the fit.";
+    return `**I am currently in Demo Mode** because the \`GEMINI_API_KEY\` is not set. However, here is a mock recommendation for your interview:
+
+**Tech Interview Smart Casual**
+- **Top:** Crisp Light Blue Oxford Shirt
+- **Bottom:** Olive Chinos
+- **Outerwear:** Unstructured Navy Blazer
+- **Shoes:** Brown Leather Loafers
+
+*Why it works:* The unstructured blazer elevates the look to professional, while the chinos and open collar keep it approachable for tech culture. Make sure the blazer fits well in the shoulders—it's the most important part of the fit.`;
   } else if (isWedding) {
-    greeting = "In Demo Mode! For a beach wedding, breathable fabrics and lighter colors are key to staying cool and looking sharp.";
-    outfit = {
-      top: "White Linen Button-Down (No Tie)",
-      bottom: "Light Tan Linen Trousers",
-      shoes: "Suede Loafers (Sockless)",
-      outerwear: "Beige Linen Suit Jacket"
-    };
-    whyItWorks = "Linen is highly breathable and perfectly matches the relaxed yet elegant vibe of a beach setting.";
-    stylingTips[0] = "Embrace the wrinkles—linen naturally creases and adds character to the outfit.";
+    return `**I am currently in Demo Mode** because the \`GEMINI_API_KEY\` is not set. However, here is a mock recommendation for your wedding:
+
+**Summer Beach Wedding**
+- **Top:** White Linen Button-Down (No Tie)
+- **Bottom:** Light Tan Linen Trousers
+- **Outerwear:** Beige Linen Suit Jacket
+- **Shoes:** Suede Loafers (Sockless)
+
+*Why it works:* Linen is highly breathable and perfectly matches the relaxed yet elegant vibe of a beach setting. Embrace the wrinkles—linen naturally creases and adds character to the outfit.`;
   }
 
-  const jsonResponse = {
-    greeting,
-    outfit,
-    whyItWorks,
-    stylingTips,
-    colorPalette,
-    confidenceScore: 95,
-    fashionRating: 4.5,
-    stylingNote: "Add your GEMINI_API_KEY to Vercel to unlock real, personalized AI styling!"
-  };
+  return `**I am currently in Demo Mode** because the \`GEMINI_API_KEY\` is not set on Vercel. However, here is a mock recommendation based on your prompt:
 
-  return "```json\n" + JSON.stringify(jsonResponse, null, 2) + "\n```";
+**Casual Everyday Look**
+- **Top:** Classic White Cotton Tee
+- **Bottom:** Dark Wash Straight-Leg Denim
+- **Outerwear:** Lightweight Navy Bomber Jacket
+- **Shoes:** Minimalist White Leather Sneakers
+
+*Why it works:* This combination balances casual comfort with clean, modern aesthetics, making it perfect for everyday wear. Tuck the tee slightly at the front (French tuck) for a more tailored silhouette.`;
 }
 
 /**
