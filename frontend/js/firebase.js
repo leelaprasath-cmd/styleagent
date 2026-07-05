@@ -3,18 +3,21 @@ import { getFirestore, collection, addDoc, query, orderBy, getDocs, onSnapshot, 
 
 let app, db;
 
+const firebaseConfig = {
+  apiKey: "AIzaSyCx3q3E90CenFwTNUlHZ0luk38JhC81XbE",
+  authDomain: "style-agent-b1dfa.firebaseapp.com",
+  projectId: "style-agent-b1dfa",
+  storageBucket: "style-agent-b1dfa.firebasestorage.app",
+  messagingSenderId: "669506409628",
+  appId: "1:669506409628:web:42d42923ff230c57524959",
+  measurementId: "G-5HNJWR9FWE"
+};
+
 async function initFirebase() {
   try {
-    const res = await fetch('/api/firebase-config');
-    if (!res.ok) {
-      console.warn("Firebase not configured on backend. Chat history will not persist.");
-      return null;
-    }
-    const config = await res.json();
-    if (!config.apiKey) return null;
-    
-    app = initializeApp(config);
+    app = initializeApp(firebaseConfig);
     db = getFirestore(app);
+    console.log("🔥 Firebase initialized successfully!");
     return db;
   } catch (e) {
     console.error("Firebase init failed:", e);
