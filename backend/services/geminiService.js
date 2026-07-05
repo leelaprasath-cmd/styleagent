@@ -7,8 +7,58 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { config } = require('../config/config');
 const logger = require('../utils/logger');
 
-// Initialize the Gemini SDK with our API key
-const genAI = new GoogleGenerativeAI(config.geminiApiKey);
+// Initialize the Gemini SDK ONLY if the API key is present
+const genAI = config.geminiApiKey ? new GoogleGenerativeAI(config.geminiApiKey) : null;
+
+/**
+ * Mocks a response for demo purposes when the API key is missing.
+ */
+function getMockResponse(lastUserMessage) {
+  const isInterview = lastUserMessage.toLowerCase().includes('interview');
+  const isWedding = lastUserMessage.toLowerCase().includes('wedding');
+
+  let message = "I am currently in Demo Mode because the `GEMINI_API_KEY` is not set on Vercel. However, I'd still love to recommend an outfit based on your prompt!";
+  let title = "Casual Everyday Look";
+  let items = [
+    { name: "Classic White Tee", description: "A comfortable, well-fitted cotton t-shirt.", icon: "bx-purchase-tag" },
+    { name: "Dark Wash Denim", description: "Versatile jeans that can be dressed up or down.", icon: "bx-trip" },
+    { name: "White Sneakers", description: "Clean, minimalist sneakers for a sharp finish.", icon: "bx-run" }
+  ];
+  let colors = ["#FFFFFF", "#1E3A8A", "#E5E7EB"];
+
+  if (isInterview) {
+    title = "Tech Interview Smart Casual";
+    message = "In Demo Mode! But for a tech interview, you want to look polished but not overly formal. Here's a great combination:";
+    items = [
+      { name: "Navy Blazer", description: "Unstructured blazer for a professional yet relaxed vibe.", icon: "bx-briefcase" },
+      { name: "Crisp Oxford Shirt", description: "Light blue or white button-down shirt.", icon: "bx-user" },
+      { name: "Chinos", description: "Olive or khaki chinos to complement the navy blazer.", icon: "bx-street-view" }
+    ];
+    colors = ["#1E3A8A", "#F3F4F6", "#4B5320"];
+  } else if (isWedding) {
+    title = "Summer Beach Wedding";
+    message = "In Demo Mode! For a beach wedding, breathable fabrics and lighter colors are key to staying cool and looking sharp.";
+    items = [
+      { name: "Linen Suit", description: "Light tan or beige linen suit.", icon: "bx-sun" },
+      { name: "White Linen Shirt", description: "No tie needed, keep the top button open.", icon: "bx-water" },
+      { name: "Loafers", description: "Suede loafers in a medium brown.", icon: "bx-walk" }
+    ];
+    colors = ["#D2B48C", "#FFFFFF", "#8B4513"];
+  }
+
+  const jsonResponse = {
+    message,
+    outfit: {
+      title,
+      confidence: 95,
+      items,
+      colors,
+      tips: ["Since the API key is missing, this is a simulated response. Add your GEMINI_API_KEY to Vercel to unlock the real AI!"]
+    }
+  };
+
+  return "```json\n" + JSON.stringify(jsonResponse, null, 2) + "\n```";
+}
 
 /**
  * Sends a message to Gemini and returns the text response.
@@ -19,6 +69,15 @@ const genAI = new GoogleGenerativeAI(config.geminiApiKey);
  * @returns {Promise<string>} - The model's text response
  */
 async function generateContent(systemPrompt, messages, options = {}) {
+  const lastMessage = messages[messages.length - 1];
+
+  // If no API key is provided, return a mock response so the UI still works
+  if (!genAI) {
+    logger.warn('GeminiService', 'API Key missing. Returning mock response.');
+    await new Promise((r) => setTimeout(r, 1500)); // Simulate network delay
+    return getMockResponse(lastMessage.content);
+  }
+
   const model = genAI.getGenerativeModel({
     model: config.geminiModel,
     systemInstruction: systemPrompt,
@@ -50,9 +109,6 @@ async function generateContent(systemPrompt, messages, options = {}) {
       parts: [{ text: cleanText || "Hello" }],
     };
   });
-
-  // The last message is the current user input
-  const lastMessage = messages[messages.length - 1];
 
   logger.agent('GeminiService', `Sending request with ${history.length} history items`);
 
@@ -92,6 +148,10 @@ async function generateContent(systemPrompt, messages, options = {}) {
  * @returns {Promise<string>}
  */
 async function quickGenerate(prompt) {
+  if (!genAI) {
+    return '{"error": "Demo mode active"}';
+  }
+
   const model = genAI.getGenerativeModel({
     model: config.geminiModel,
     generationConfig: {

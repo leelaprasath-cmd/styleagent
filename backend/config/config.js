@@ -31,11 +31,12 @@ const config = {
 // Validate required config values on startup
 function validateConfig() {
   if (!config.geminiApiKey) {
-    console.error('❌ GEMINI_API_KEY is missing! Please add it to your .env file.');
-    console.error('   Get a free key at: https://aistudio.google.com/');
-    process.exit(1);
+    console.warn('⚠️ WARNING: GEMINI_API_KEY is missing!');
+    console.warn('   The server will start, but the AI will return MOCKED responses.');
+    console.warn('   Get a free key at: https://aistudio.google.com/ and add it to your .env or Vercel environment variables.');
+  } else {
+    console.log(`✅ Config loaded | ENV: ${config.nodeEnv} | Port: ${config.port}`);
   }
-  console.log(`✅ Config loaded | ENV: ${config.nodeEnv} | Port: ${config.port}`);
 }
 
 module.exports = { config, validateConfig };
