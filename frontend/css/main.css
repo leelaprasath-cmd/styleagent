@@ -3,7 +3,7 @@
    Pitch black backgrounds, subtle borders, muted text.
    ============================================================ */
 
-   :root[data-theme="dark"] {
+   :root {
     /* ── Typography ── */
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   

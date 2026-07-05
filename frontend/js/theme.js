@@ -9,7 +9,7 @@ const ThemeManager = (() => {
 
   // Get saved theme or default to dark
   function getSavedTheme() {
-    return localStorage.getItem(STORAGE_KEY) || 'dark';
+    return 'dark'; // Hardcoded to dark mode per user request
   }
 
   // Apply theme to <html> element
