@@ -55,8 +55,8 @@ router.post('/', async (req, res) => {
     // Return a graceful error to the frontend
     return res.status(500).json({
       success: false,
-      error: 'StyleAgent encountered an issue. Please try again in a moment.',
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined,
+      error: error.message || 'StyleAgent encountered an issue. Please try again in a moment.',
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined,
     });
   }
 });
