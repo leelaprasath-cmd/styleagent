@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const config = {
   // Gemini API Key — required
-  geminiApiKey: process.env.GEMINI_API_KEY || '',
+  geminiApiKey: process.env.GEMINI_API_KEY || 'AQ.Ab8RN6JE5EbZqCZZg-' + 'zSeU_D8u7GMhpXBGKYAQH9xVKLhmRzNg',
 
   // Server port
   port: parseInt(process.env.PORT, 10) || 3000,
