@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, collection, addDoc, query, orderBy, getDocs, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 let app, db, auth;
 
@@ -45,8 +45,17 @@ window.FirebaseAuth = {
   signInWithGoogle: async () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
-    return signInWithPopup(auth, provider);
+    // Try popup first; fall back to redirect if popup is blocked
+    try {
+      return await signInWithPopup(auth, provider);
+    } catch (err) {
+      if (err.code === 'auth/popup-blocked' || err.code === 'auth/cancelled-popup-request') {
+        return signInWithRedirect(auth, provider);
+      }
+      throw err;
+    }
   },
+  checkRedirectResult: () => getRedirectResult(auth),
   signOut: () => signOut(auth),
   onAuthStateChanged: (callback) => onAuthStateChanged(auth, callback),
   getAuth: () => auth

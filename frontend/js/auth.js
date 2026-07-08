@@ -130,6 +130,9 @@ const Auth = (() => {
       if (window.FirebaseAuth) {
         clearInterval(waitForFirebase);
 
+        // Check if returning from a redirect sign-in
+        window.FirebaseAuth.checkRedirectResult().catch(() => {});
+
         // Listen for auth state changes
         window.FirebaseAuth.onAuthStateChanged((user) => {
           if (user) {
