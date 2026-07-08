@@ -25,21 +25,21 @@ const Auth = (() => {
   let currentUser = null;
 
   function showAuthScreen() {
-    const auth = authScreen();
+    const auth    = authScreen();
     const landing = landingPage();
-    const app = appLayout();
-    if (auth)    { auth.classList.remove('hidden'); }
-    if (landing) { landing.style.display = 'none'; }
-    if (app)     { app.classList.add('hidden'); }
+    const app     = appLayout();
+    if (landing) landing.style.display = 'none';
+    if (app)     { app.classList.add('hidden'); app.style.display = ''; }
+    if (auth)    { auth.style.display = 'flex'; auth.classList.remove('hidden'); }
   }
 
   function showApp() {
-    const auth = authScreen();
+    const auth    = authScreen();
     const landing = landingPage();
-    const app = appLayout();
-    if (auth)    { auth.classList.add('hidden'); }
-    if (landing) { landing.style.display = 'none'; }
-    if (app)     { app.classList.remove('hidden'); }
+    const app     = appLayout();
+    if (landing) landing.style.display = 'none';
+    if (auth)    { auth.style.display = 'none'; auth.classList.add('hidden'); }
+    if (app)     { app.classList.remove('hidden'); app.style.display = ''; }
   }
 
   function updateUserUI(user) {
@@ -122,8 +122,11 @@ const Auth = (() => {
   }
 
   function init() {
-    // Wait for Firebase to be ready
+    // Wait for Firebase Auth module to load (it's an ES module, loads async)
+    let retries = 0;
+    const maxRetries = 30; // wait up to 3 seconds
     const waitForFirebase = setInterval(() => {
+      retries++;
       if (window.FirebaseAuth) {
         clearInterval(waitForFirebase);
 
@@ -133,13 +136,16 @@ const Auth = (() => {
             currentUser = user;
             updateUserUI(user);
             showApp();
-            // Initialize the chat app only after auth
             if (window.App && window.App.init) window.App.init();
           } else {
             currentUser = null;
             showAuthScreen();
           }
         });
+      } else if (retries >= maxRetries) {
+        clearInterval(waitForFirebase);
+        console.warn('FirebaseAuth not available — showing auth screen anyway');
+        showAuthScreen();
       }
     }, 100);
 
