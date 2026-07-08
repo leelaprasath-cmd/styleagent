@@ -12,14 +12,13 @@ const App = (() => {
     if (initialized) return;
     initialized = true;
 
-    const { $ } = window.StyleAgentUtils;
     const { showToast } = window.Renderer;
 
     // ── Initialize Core Modules ────────────────────────────────
     window.ThemeManager.init();
     window.Chat.init();
 
-    // ── Sidebar Toggle (Desktop) ───────────────────────────────
+    // ── Sidebar Toggle ─────────────────────────────────────────
     const sidebar       = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebar-toggle');
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -30,7 +29,6 @@ const App = (() => {
       });
     }
 
-    // Mobile sidebar open/close
     let overlay = null;
 
     function openMobileSidebar() {
@@ -80,10 +78,9 @@ const App = (() => {
       }
     }
 
-    if (settingsBtn) settingsBtn.addEventListener('click', openModal);
+    if (settingsBtn)   settingsBtn.addEventListener('click', openModal);
     if (closeSettings) closeSettings.addEventListener('click', closeModal);
 
-    // Close when clicking outside the modal box
     if (settingsModal) {
       settingsModal.addEventListener('click', (e) => {
         if (e.target === settingsModal) closeModal();
@@ -100,7 +97,7 @@ const App = (() => {
     });
 
     console.log(
-      '%c StyleAgent v1.5-Pro %c Auth + Settings Ready ',
+      '%c StyleAgent v1.5-Pro %c Ready ',
       'background: #6366F1; color: white; padding: 4px 8px; border-radius: 4px 0 0 4px; font-weight: bold;',
       'background: #10B981; color: white; padding: 4px 8px; border-radius: 0 4px 4px 0;'
     );
@@ -111,29 +108,14 @@ const App = (() => {
 
 window.App = App;
 
-// Auth.js will call App.init() after login.
-// If FirebaseAuth is not available (e.g., firebase.js blocked), init directly.
+// Auth.js handles init after checking auth state.
+// Fallback: if Firebase is blocked, init directly after 600ms.
 document.addEventListener('DOMContentLoaded', () => {
-  // Wait briefly for firebase module to load, then check auth
   setTimeout(() => {
-    if (!window.FirebaseAuth) {
-      // No Firebase Auth available — init app directly (fallback)
-      App.init();
-    } else {
-      // Auth.js handles init via onAuthStateChanged
+    if (window.Auth) {
       Auth.init();
+    } else {
+      App.init();
     }
-  }, 500);
+  }, 600);
 });
-
-
-
-    }
-  });
-
-  console.log(
-    '%c StyleAgent v1.0 %c AI Fashion Stylist Ready ',
-    'background: #8B5CF6; color: white; padding: 4px 8px; border-radius: 4px 0 0 4px; font-weight: bold;',
-    'background: #06B6D4; color: white; padding: 4px 8px; border-radius: 0 4px 4px 0;'
-  );
-})();
