@@ -218,21 +218,15 @@ const Renderer = (() => {
    */
   function renderAIMessage(response, rawContent = '') {
     let innerContent = '';
+    const text = response.message || rawContent || '';
 
-    if (response.type === 'structured' && response.data) {
-      // Full outfit recommendation card
-      innerContent = renderOutfitCard(response.data);
-    } else if (response.type === 'off_topic') {
-      // Polite off-topic redirect
-      innerContent = `<div class="off-topic-bubble" role="alert">
-        <strong>🎭 Outside my expertise</strong><br/><br/>
-        ${escapeHtml(response.message)}
-      </div>`;
+    if (response.type === 'off_topic') {
+      innerContent = `<div class="ai-bubble"><p>🎭 ${escapeHtml(response.message)}</p></div>`;
     } else {
-      // Conversational markdown response
+      // Always render as clean markdown — exactly like ChatGPT
       const html = typeof marked !== 'undefined'
-        ? marked.parse(response.message || rawContent || '')
-        : escapeHtml(response.message || rawContent || '');
+        ? marked.parse(text)
+        : escapeHtml(text);
       innerContent = `<div class="ai-bubble">${html}</div>`;
     }
 
