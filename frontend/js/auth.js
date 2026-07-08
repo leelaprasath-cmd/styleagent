@@ -43,22 +43,32 @@ const Auth = (() => {
   }
 
   function updateUserUI(user) {
-    if (!user) return;
-
-    const photoURL = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || 'U')}&background=6366F1&color=fff&size=80`;
-    const name = user.displayName || 'User';
-    const email = user.email || '';
+    const photoURL = user
+      ? (user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || 'U')}&background=6366F1&color=fff&size=80`)
+      : `https://ui-avatars.com/api/?name=Guest&background=333&color=fff&size=80`;
+    const name  = user ? (user.displayName || 'User') : 'Guest';
+    const email = user ? (user.email || '') : 'Not signed in';
 
     // Sidebar
     const av = avatarImg();
     if (av) { av.src = photoURL; av.alt = name; }
-    if (userNameEl()) userNameEl().textContent = name;
+    if (userNameEl())  userNameEl().textContent  = name;
     if (userEmailEl()) userEmailEl().textContent = email;
 
     // Settings modal
     if (settingsAvatarEl()) settingsAvatarEl().src = photoURL;
-    if (settingsNameEl()) settingsNameEl().textContent = name;
-    if (settingsEmailEl()) settingsEmailEl().textContent = email;
+    if (settingsNameEl())   settingsNameEl().textContent  = name;
+    if (settingsEmailEl())  settingsEmailEl().textContent = email;
+
+    // Show/hide Google badge and sign-in button
+    const badge       = document.getElementById('google-badge');
+    const signinSection = document.getElementById('signin-section');
+    if (badge)         badge.style.display       = user ? 'inline-flex' : 'none';
+    if (signinSection) signinSection.style.display = user ? 'none' : 'block';
+
+    // Update logout button label
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) logoutBtn.style.display = user ? 'flex' : 'none';
   }
 
   function setLoading(loading) {
@@ -124,7 +134,7 @@ const Auth = (() => {
   function init() {
     // Wait for Firebase Auth module to load (it's an ES module, loads async)
     let retries = 0;
-    const maxRetries = 30; // wait up to 3 seconds
+    const maxRetries = 30;
     const waitForFirebase = setInterval(() => {
       retries++;
       if (window.FirebaseAuth) {
@@ -138,27 +148,38 @@ const Auth = (() => {
           if (user) {
             currentUser = user;
             updateUserUI(user);
-            showApp();
-            if (window.App && window.App.init) window.App.init();
           } else {
-            currentUser = null;
-            showAuthScreen();
+            // No user logged in — show guest UI
+            const av = avatarImg();
+            if (av) av.src = `https://ui-avatars.com/api/?name=Guest&background=333&color=fff&size=80`;
+            if (userNameEl()) userNameEl().textContent = 'Guest';
+            if (userEmailEl()) userEmailEl().textContent = 'Not signed in';
           }
+          // Always show the app — auth is optional
+          showApp();
+          if (window.App && window.App.init) window.App.init();
         });
       } else if (retries >= maxRetries) {
         clearInterval(waitForFirebase);
-        console.warn('FirebaseAuth not available — showing auth screen anyway');
-        showAuthScreen();
+        // Firebase unavailable — just show app anyway
+        showApp();
+        if (window.App && window.App.init) window.App.init();
       }
     }, 100);
 
-    // Bind sign-in button
+    // Bind sign-in buttons (both auth screen and settings modal)
     const btn = googleBtn();
     if (btn) btn.addEventListener('click', handleGoogleSignIn);
+
+    const modalBtn = document.getElementById('modal-google-signin-btn');
+    if (modalBtn) modalBtn.addEventListener('click', handleGoogleSignIn);
 
     // Bind logout button
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) logoutBtn.addEventListener('click', handleSignOut);
+
+    // Show guest UI immediately while Firebase loads
+    updateUserUI(null);
   }
 
   function getCurrentUser() { return currentUser; }
