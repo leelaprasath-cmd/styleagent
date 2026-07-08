@@ -245,6 +245,66 @@
     font-weight: 600;
     color: var(--text-primary);
   }
+
+  /* ── AI Bubble (conversational markdown) ── */
+  .ai-bubble {
+    color: var(--text-primary);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .ai-bubble p {
+    margin: 0 0 0.85rem 0;
+  }
+
+  .ai-bubble p:last-child {
+    margin-bottom: 0;
+  }
+
+  .ai-bubble ul,
+  .ai-bubble ol {
+    margin: 0.4rem 0 0.85rem 1.25rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .ai-bubble li {
+    padding-left: 0.25rem;
+    line-height: 1.65;
+  }
+
+  .ai-bubble strong {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .ai-bubble em {
+    font-style: italic;
+    color: var(--text-secondary);
+  }
+
+  .ai-bubble h1, .ai-bubble h2, .ai-bubble h3 {
+    font-weight: 600;
+    margin: 1rem 0 0.4rem 0;
+    color: var(--text-primary);
+  }
+
+  .ai-bubble code {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 0.875rem;
+    font-family: monospace;
+  }
+
+  .ai-bubble hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0.85rem 0;
+  }
   
   /* ── Typing Indicator ── */
   .typing-indicator {
