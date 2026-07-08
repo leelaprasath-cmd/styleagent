@@ -1,7 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, collection, addDoc, query, orderBy, getDocs, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-let app, db;
+let app, db, auth;
 
 const firebaseConfig = {
   apiKey: "AIzaSyCx3q3E90CenFwTNUlHZ0luk38JhC81XbE",
@@ -17,6 +18,7 @@ async function initFirebase() {
   try {
     app = initializeApp(firebaseConfig);
     db = getFirestore(app);
+    auth = getAuth(app);
     console.log("🔥 Firebase initialized successfully!");
     return db;
   } catch (e) {
@@ -25,7 +27,7 @@ async function initFirebase() {
   }
 }
 
-// Expose to global window object so other scripts can access it without being ES modules
+// Expose Firestore to global window object
 window.FirebaseDB = {
   initFirebase,
   collection,
@@ -36,4 +38,16 @@ window.FirebaseDB = {
   onSnapshot,
   serverTimestamp,
   getDb: () => db
+};
+
+// Expose Auth to global window object
+window.FirebaseAuth = {
+  signInWithGoogle: async () => {
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    return signInWithPopup(auth, provider);
+  },
+  signOut: () => signOut(auth),
+  onAuthStateChanged: (callback) => onAuthStateChanged(auth, callback),
+  getAuth: () => auth
 };

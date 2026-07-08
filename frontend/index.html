@@ -117,6 +117,33 @@
     </div>
 
     <!-- ═══════════════════════════════════════════════ -->
+    <!-- AUTH SCREEN                                    -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div id="auth-screen" class="auth-screen hidden">
+      <div class="auth-card">
+        <div class="auth-logo">
+          <i class="bx bx-diamond"></i>
+        </div>
+        <h1 class="auth-title">StyleAgent</h1>
+        <p class="auth-subtitle">Your AI Personal Fashion Stylist</p>
+
+        <div id="auth-error" class="auth-error hidden"></div>
+
+        <button id="google-signin-btn" class="google-btn">
+          <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+            <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" fill="#34A853"/>
+            <path d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.175 0 7.55 0 9s.348 2.825.957 4.039l3.007-2.332z" fill="#FBBC05"/>
+            <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+          </svg>
+          Sign in with Google
+        </button>
+
+        <p class="auth-disclaimer">By continuing, you agree to our Terms of Service and Privacy Policy.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ -->
     <!-- APP INTERFACE (Hidden initially)               -->
     <!-- ═══════════════════════════════════════════════ -->
     <div id="app-layout" class="hidden">
@@ -142,8 +169,13 @@
         </div>
 
         <div class="sidebar-footer">
-          <button class="icon-btn" id="settings-btn" aria-label="Settings">
-            <i class="bx bx-cog"></i>
+          <button class="user-profile-row" id="settings-btn" aria-label="Open Settings">
+            <img id="user-avatar" class="user-avatar" src="" alt="User Avatar" />
+            <div class="user-info">
+              <span id="user-name" class="user-name">Loading...</span>
+              <span id="user-email" class="user-email"></span>
+            </div>
+            <i class="bx bx-dots-horizontal-rounded user-menu-icon"></i>
           </button>
         </div>
       </aside>
@@ -249,22 +281,91 @@
     <!-- SETTINGS MODAL                                 -->
     <!-- ═══════════════════════════════════════════════ -->
     <div id="settings-modal" class="modal-overlay hidden" aria-hidden="true">
-      <div class="modal-content">
+      <div class="modal-content settings-modal-content">
         <div class="modal-header">
           <h2>Settings</h2>
           <button class="icon-btn" id="close-settings"><i class="bx bx-x"></i></button>
         </div>
+
+        <!-- Settings Tabs -->
+        <div class="settings-tabs">
+          <button class="settings-tab active" data-tab="general">General</button>
+          <button class="settings-tab" data-tab="account">Account</button>
+          <button class="settings-tab" data-tab="about">About</button>
+        </div>
+
         <div class="modal-body">
-          <div class="setting-group">
-            <label class="setting-label">About StyleAgent</label>
-            <div class="about-card">
-              <p>StyleAgent is an AI Personal Fashion Stylist built with a clean, professional architecture.</p>
-              <div class="about-tags">
-                <span class="tag">AI Engine</span>
-                <span class="tag">Professional UI</span>
+
+          <!-- General Tab -->
+          <div class="settings-tab-content active" id="tab-general">
+            <div class="setting-group">
+              <label class="setting-label">Theme</label>
+              <div class="setting-row">
+                <span class="setting-desc">Interface appearance</span>
+                <div class="theme-toggle-btns">
+                  <button class="theme-opt active" id="theme-dark-btn"><i class="bx bx-moon"></i> Dark</button>
+                  <button class="theme-opt" id="theme-light-btn"><i class="bx bx-sun"></i> Light</button>
+                </div>
+              </div>
+            </div>
+            <div class="setting-group">
+              <label class="setting-label">AI Model</label>
+              <div class="setting-row">
+                <span class="setting-desc">StyleAgent-1.5-Pro (Gemini 2.5 Flash)</span>
+                <span class="tag">Active</span>
+              </div>
+            </div>
+            <div class="setting-group">
+              <label class="setting-label">Chat History</label>
+              <div class="setting-row">
+                <span class="setting-desc">Conversations are saved to Firebase</span>
+                <span class="tag">Enabled</span>
               </div>
             </div>
           </div>
+
+          <!-- Account Tab -->
+          <div class="settings-tab-content" id="tab-account">
+            <div class="account-profile-card">
+              <img id="settings-avatar" class="account-avatar" src="" alt="Profile" />
+              <div class="account-info">
+                <div id="settings-name" class="account-name">Loading...</div>
+                <div id="settings-email" class="account-email"></div>
+                <span class="google-badge"><i class="bx bxl-google"></i> Google Account</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- About Tab -->
+          <div class="settings-tab-content" id="tab-about">
+            <div class="about-info">
+              <div class="about-row">
+                <span class="about-key">Version</span>
+                <span class="about-val">StyleAgent 1.5-Pro</span>
+              </div>
+              <div class="about-row">
+                <span class="about-key">AI Engine</span>
+                <span class="about-val">Gemini 2.5 Flash</span>
+              </div>
+              <div class="about-row">
+                <span class="about-key">Database</span>
+                <span class="about-val">Firebase Firestore</span>
+              </div>
+              <div class="about-row">
+                <span class="about-key">Auth</span>
+                <span class="about-val">Firebase Authentication</span>
+              </div>
+            </div>
+            <p class="about-desc">StyleAgent specialises in outfit recommendations, color coordination, wardrobe planning, and fashion advice for any occasion.</p>
+          </div>
+
+        </div>
+
+        <!-- Logout Button -->
+        <div class="modal-footer">
+          <button class="logout-btn" id="logout-btn">
+            <i class="bx bx-log-out"></i> Log out
+          </button>
         </div>
       </div>
     </div>
@@ -283,5 +384,7 @@
     <script src="js/renderer.js"></script>
     <script src="js/chat.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/settings.js"></script>
   </body>
 </html>

@@ -5,111 +5,129 @@
 
 'use strict';
 
-(function initApp() {
-  const { $ } = window.StyleAgentUtils;
-  const { showToast } = window.Renderer;
+const App = (() => {
+  let initialized = false;
 
-  // ── Initialize Core Modules ────────────────────────────────
-  window.ThemeManager.init();
-  window.Chat.init();
+  function init() {
+    if (initialized) return;
+    initialized = true;
 
-  // ── Sidebar Toggle (Desktop) ───────────────────────────────
-  const sidebar      = document.getElementById('sidebar');
-  const sidebarToggle = document.getElementById('sidebar-toggle');
-  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const { $ } = window.StyleAgentUtils;
+    const { showToast } = window.Renderer;
 
-  // Desktop sidebar collapse
-  if (sidebarToggle && sidebar) {
-    sidebarToggle.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed');
-    });
-  }
+    // ── Initialize Core Modules ────────────────────────────────
+    window.ThemeManager.init();
+    window.Chat.init();
 
-  // Mobile sidebar open/close
-  let overlay = null;
+    // ── Sidebar Toggle (Desktop) ───────────────────────────────
+    const sidebar       = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 
-  function openMobileSidebar() {
-    if (!sidebar) return;
-    sidebar.classList.add('mobile-open');
-
-    // Create overlay
-    overlay = document.createElement('div');
-    overlay.className = 'sidebar-overlay visible';
-    overlay.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(overlay);
-
-    overlay.addEventListener('click', closeMobileSidebar);
-  }
-
-  function closeMobileSidebar() {
-    if (!sidebar) return;
-    sidebar.classList.remove('mobile-open');
-    if (overlay) {
-      overlay.remove();
-      overlay = null;
+    if (sidebarToggle && sidebar) {
+      sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+      });
     }
-  }
 
-  if (mobileMenuBtn) {
-    mobileMenuBtn.addEventListener('click', () => {
-      if (sidebar && sidebar.classList.contains('mobile-open')) {
-        closeMobileSidebar();
-      } else {
-        openMobileSidebar();
+    // Mobile sidebar open/close
+    let overlay = null;
+
+    function openMobileSidebar() {
+      if (!sidebar) return;
+      sidebar.classList.add('mobile-open');
+      overlay = document.createElement('div');
+      overlay.className = 'sidebar-overlay visible';
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(overlay);
+      overlay.addEventListener('click', closeMobileSidebar);
+    }
+
+    function closeMobileSidebar() {
+      if (!sidebar) return;
+      sidebar.classList.remove('mobile-open');
+      if (overlay) { overlay.remove(); overlay = null; }
+    }
+
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => {
+        if (sidebar && sidebar.classList.contains('mobile-open')) {
+          closeMobileSidebar();
+        } else {
+          openMobileSidebar();
+        }
+      });
+    }
+
+    // ── Settings Modal ─────────────────────────────────────────
+    const settingsBtn   = document.getElementById('settings-btn');
+    const settingsModal = document.getElementById('settings-modal');
+    const closeSettings = document.getElementById('close-settings');
+
+    function openModal() {
+      if (settingsModal) {
+        settingsModal.classList.remove('hidden');
+        settingsModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
       }
+    }
+
+    function closeModal() {
+      if (settingsModal) {
+        settingsModal.classList.add('hidden');
+        settingsModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (settingsBtn) settingsBtn.addEventListener('click', openModal);
+    if (closeSettings) closeSettings.addEventListener('click', closeModal);
+
+    // Close when clicking outside the modal box
+    if (settingsModal) {
+      settingsModal.addEventListener('click', (e) => {
+        if (e.target === settingsModal) closeModal();
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { closeModal(); closeMobileSidebar(); }
     });
+
+    // ── Backend Health Check ───────────────────────────────────
+    window.API.healthCheck().then((ok) => {
+      if (!ok) showToast('Cannot reach StyleAgent server. Is it running?', 'error', 6000);
+    });
+
+    console.log(
+      '%c StyleAgent v1.5-Pro %c Auth + Settings Ready ',
+      'background: #6366F1; color: white; padding: 4px 8px; border-radius: 4px 0 0 4px; font-weight: bold;',
+      'background: #10B981; color: white; padding: 4px 8px; border-radius: 0 4px 4px 0;'
+    );
   }
 
-  // ── Settings Modal ─────────────────────────────────────────
-  const settingsBtn   = document.getElementById('settings-btn');
-  const settingsModal = document.getElementById('settings-modal');
-  const closeSettings = document.getElementById('close-settings');
-  const modalBackdrop = document.getElementById('modal-backdrop');
+  return { init };
+})();
 
-  function openModal() {
-    if (settingsModal) settingsModal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-  }
+window.App = App;
 
-  function closeModal() {
-    if (settingsModal) settingsModal.classList.add('hidden');
-    document.body.style.overflow = '';
-  }
-
-  if (settingsBtn) settingsBtn.addEventListener('click', openModal);
-  if (closeSettings) closeSettings.addEventListener('click', closeModal);
-  if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
-
-  // Close modal on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeModal();
-      closeMobileSidebar();
+// Auth.js will call App.init() after login.
+// If FirebaseAuth is not available (e.g., firebase.js blocked), init directly.
+document.addEventListener('DOMContentLoaded', () => {
+  // Wait briefly for firebase module to load, then check auth
+  setTimeout(() => {
+    if (!window.FirebaseAuth) {
+      // No Firebase Auth available — init app directly (fallback)
+      App.init();
+    } else {
+      // Auth.js handles init via onAuthStateChanged
+      Auth.init();
     }
-  });
+  }, 500);
+});
 
-  // ── Backend Health Check ───────────────────────────────────
-  // Checks if the server is reachable on load
-  window.API.healthCheck().then((ok) => {
-    if (!ok) {
-      showToast('Cannot reach StyleAgent server. Is it running?', 'error', 6000);
-    }
-  });
 
-  // ── Color swatch copy-hex on click ────────────────────────
-  // Delegated event listener for dynamically created swatches
-  document.getElementById('messages-container')?.addEventListener('click', async (e) => {
-    const swatch = e.target.closest('.color-swatch');
-    if (swatch) {
-      const hex = swatch.style.backgroundColor;
-      // Try to find hex from the chip's title
-      const chip = swatch.closest('.color-chip');
-      const title = chip?.getAttribute('title') || '';
-      const hexMatch = title.match(/#[0-9A-Fa-f]{3,8}/);
-      const textToCopy = hexMatch ? hexMatch[0] : hex;
 
-      await window.StyleAgentUtils.copyToClipboard(textToCopy);
-      showToast(`Copied ${textToCopy} to clipboard!`, 'success', 2000);
     }
   });
 
