@@ -25,6 +25,18 @@
     <link rel="stylesheet" href="css/animations.css" />
   </head>
   <body>
+    <!-- FAILSAFE: ensure app shows; auth.js will update user info async -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var app = document.getElementById('app-layout');
+        var landing = document.getElementById('landing-page');
+        var auth = document.getElementById('auth-screen');
+        if (landing) landing.style.display = 'none';
+        if (auth)    auth.style.display = 'none';
+        if (app)     { app.style.display = 'flex'; app.classList.remove('hidden'); }
+      });
+    </script>
+
     <!-- ═══════════════════════════════════════════════ -->
     <!-- LANDING PAGE                                   -->
     <!-- ═══════════════════════════════════════════════ -->
