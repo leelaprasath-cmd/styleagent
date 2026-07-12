@@ -25,22 +25,28 @@
     <link rel="stylesheet" href="css/animations.css" />
   </head>
   <body>
-    <!-- FAILSAFE: ensure app shows; auth.js will update user info async -->
+    <!-- Initial State setup -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         var app = document.getElementById('app-layout');
         var landing = document.getElementById('landing-page');
-        var auth = document.getElementById('auth-screen');
-        if (landing) landing.style.display = 'none';
-        if (auth)    auth.style.display = 'none';
-        if (app)     { app.style.display = 'flex'; app.classList.remove('hidden'); }
+        
+        // Show landing page by default, hide app
+        if (landing) {
+          landing.style.display = 'block';
+          landing.classList.remove('hidden');
+        }
+        if (app) {
+          app.style.display = 'none';
+          app.classList.add('hidden');
+        }
       });
     </script>
 
     <!-- ═══════════════════════════════════════════════ -->
     <!-- LANDING PAGE                                   -->
     <!-- ═══════════════════════════════════════════════ -->
-    <div id="landing-page" class="landing-wrapper" style="display:none">
+    <div id="landing-page" class="landing-wrapper">
       <!-- Parallax Background Layer -->
       <div class="parallax-bg" aria-hidden="true"></div>
 

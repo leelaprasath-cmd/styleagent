@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Wait for fade out, then hide completely and show app
         setTimeout(() => {
           landingPage.style.display = 'none';
+          appLayout.style.display = 'flex';
           appLayout.classList.remove('hidden');
-          
           // Optionally auto-focus chat input
           const chatInput = document.getElementById('chat-input');
           if(chatInput) {
