@@ -70,7 +70,10 @@ const Chat = (() => {
     const ws = welcomeScreen();
     const mc = messagesContainer();
     if (ws) ws.style.display = visible ? 'flex' : 'none';
-    if (mc) mc.style.display = visible ? 'none' : 'flex';
+    if (mc) {
+      mc.style.display = visible ? 'none' : 'flex';
+      mc.style.flexDirection = 'column';
+    }
   }
 
   // ── Scroll to Bottom ───────────────────────────────────────
