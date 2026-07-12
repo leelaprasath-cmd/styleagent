@@ -27,60 +27,41 @@ const Chat = (() => {
   const sendBtn          = () => $('#send-btn');
   const charCount        = () => $('#char-count');
 
-  // ── Firebase Helpers ───────────────────────────────────────
-  async function saveMessageToFirebase(role, content, rawText = '') {
-    if (!window.FirebaseDB || !window.FirebaseDB.getDb()) return;
+  // ── Local Storage Helpers ────────────────────────────────────
+  function saveHistoryLocal() {
     try {
-      const { collection, addDoc, serverTimestamp, getDb } = window.FirebaseDB;
-      await addDoc(collection(getDb(), 'chats'), {
-        sessionId,
-        role,
-        content: typeof content === 'object' ? JSON.stringify(content) : content,
-        rawText,
-        timestamp: serverTimestamp()
-      });
+      localStorage.setItem(sessionId, JSON.stringify(messages));
     } catch (e) {
-      console.error("Failed to save message to Firebase:", e);
+      console.error("Failed to save chat to local storage", e);
     }
   }
 
-  async function loadHistoryFromFirebase() {
-    if (!window.FirebaseDB || !window.FirebaseDB.getDb()) return;
+  function loadHistoryLocal() {
     try {
-      const { collection, query, orderBy, getDocs, getDb } = window.FirebaseDB;
-      // We can't strictly filter by sessionId without an index, so we'll fetch and filter client-side for simplicity in this MVP
-      // In production, create a composite index in Firestore for sessionId + timestamp
-      const q = query(collection(getDb(), 'chats'), orderBy('timestamp', 'asc'));
-      const snapshot = await getDocs(q);
-      
-      const history = [];
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        if (data.sessionId === sessionId) {
-          history.push(data);
+      const saved = localStorage.getItem(sessionId);
+      if (saved) {
+        const history = JSON.parse(saved);
+        if (history.length > 0) {
+          messages = [];
+          const container = messagesContainer();
+          if (container) container.innerHTML = '';
+          setWelcomeVisible(false);
+
+          history.forEach(msg => {
+            if (msg.role === 'user') {
+              messages.push({ role: 'user', content: msg.content });
+              appendMessage(renderUserMessage(msg.content));
+            } else {
+              let parsedContent = msg.content;
+              try { parsedContent = JSON.parse(msg.content); } catch(e){}
+              messages.push({ role: 'assistant', content: msg.content });
+              appendMessage(renderAIMessage(parsedContent, msg.content));
+            }
+          });
         }
-      });
-
-      if (history.length > 0) {
-        messages = [];
-        const container = messagesContainer();
-        if (container) container.innerHTML = '';
-        setWelcomeVisible(false);
-
-        history.forEach(msg => {
-          if (msg.role === 'user') {
-            messages.push({ role: 'user', content: msg.content });
-            appendMessage(renderUserMessage(msg.content));
-          } else {
-            let parsedContent = msg.content;
-            try { parsedContent = JSON.parse(msg.content); } catch(e){}
-            messages.push({ role: 'assistant', content: msg.rawText || msg.content });
-            appendMessage(renderAIMessage(parsedContent, msg.rawText));
-          }
-        });
       }
     } catch (e) {
-      console.error("Failed to load chat history:", e);
+      console.error("Failed to load chat history", e);
     }
   }
 
@@ -155,7 +136,7 @@ const Chat = (() => {
     messages.push({ role: 'user', content });
     setWelcomeVisible(false);
     appendMessage(renderUserMessage(content));
-    saveMessageToFirebase('user', content);
+    saveHistoryLocal();
   }
 
   // ── Add AI Message ─────────────────────────────────────────
@@ -165,7 +146,7 @@ const Chat = (() => {
       content: rawText || response.message || JSON.stringify(response),
     });
     appendMessage(renderAIMessage(response, rawText));
-    saveMessageToFirebase('assistant', response, rawText);
+    saveHistoryLocal();
   }
 
   // ── Submit a Message ───────────────────────────────────────
@@ -244,11 +225,8 @@ const Chat = (() => {
 
   // ── Initialize Chat ────────────────────────────────────────
   async function init() {
-    // Attempt Firebase initialization
-    if (window.FirebaseDB && window.FirebaseDB.initFirebase) {
-      await window.FirebaseDB.initFirebase();
-      await loadHistoryFromFirebase();
-    } else {
+    loadHistoryLocal();
+    if (messages.length === 0) {
       setWelcomeVisible(true);
     }
 

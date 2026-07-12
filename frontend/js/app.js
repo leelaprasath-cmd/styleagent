@@ -108,14 +108,6 @@ const App = (() => {
 
 window.App = App;
 
-// Auth.js handles init after checking auth state.
-// Fallback: if Firebase is blocked, init directly after 600ms.
 document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    if (window.Auth) {
-      Auth.init();
-    } else {
-      App.init();
-    }
-  }, 600);
+  App.init();
 });

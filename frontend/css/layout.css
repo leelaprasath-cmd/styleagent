@@ -145,9 +145,35 @@
 }
 
 /* Sidebar Footer */
+/* Sidebar Footer */
 .sidebar-footer {
   padding: 0.75rem;
   border-top: 1px solid #1a1a1a;
+}
+
+.sidebar-action-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: #a1a1aa;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sidebar-action-btn:hover {
+  background: #141414;
+  color: #ededed;
+}
+
+.sidebar-action-btn i {
+  font-size: 1.1rem;
 }
 
 /* ── Main Content Area ── */
